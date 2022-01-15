@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Modified on Tuesday January 4 12:36:03 2022
-Modified for custom object Detection purposes with TFlite.
+Modified for custom object Detection purposes with TFlite .
 
 @author: Olufemi Victor tolulope. @osinkolu on github.
 @Original author: TNIKOLIC
