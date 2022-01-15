@@ -1,0 +1,8 @@
+opencv-contrib-python-headless==4.1.2.30
+streamlit==0.81.1
+streamlit_webrtc==0.20.0
+tensorflow
+tflite-model-maker
+tflite-support
+googletrans==4.0.0-rc1
+google-search-results
