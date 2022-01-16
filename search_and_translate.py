@@ -12,7 +12,6 @@ from serpapi import GoogleSearch
 from googletrans import Translator
 translator = Translator()
 def search_and_translate(search_string, dest_language):
-
   params = {
     "q": "what is "+ search_string,
     "hl": "en",
@@ -27,14 +26,17 @@ def search_and_translate(search_string, dest_language):
     answers = (results['knowledge_graph']['description'])
   except Exception:
     try:
-      answers = (results["answer_box"]["snippet"])
+      answers = (results["answer_box"]["snippet"] + "\n" + "\n".join(results["answer_box"]["list"]).replace("...","") )
     except Exception:
       try:
-        answers = (results["organic_results"][0]["snippet"])
+        answers = (results["answer_box"]["snippet"])
       except Exception:
-        answers = ("No results found")
+        try:
+          answers = (results["organic_results"][0]["snippet"])
+        except Exception:
+          answers = ("No results found")
 
-  return(translate_alone(answers,dest_language))
+  return(translator.translate(answers, dest=dest_language, src= 'en').text)
 
 def translate_alone(answers,dest_language):
   return(translator.translate(answers, dest=dest_language, src= 'en').text)
