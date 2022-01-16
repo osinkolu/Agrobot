@@ -201,7 +201,7 @@ def main():
 
     else:
         help.header(translate_alone("Please select the method you want to use to upload photo.", language))
-        help.sub_text(translate_alone("Note: A.I may use up to 120 seconds for inference.", language))
+        help.sub_text(translate_alone("Note: A.I may use up to 30 seconds for inference.", language))
 
 if __name__ == "__main__":
     main()     
