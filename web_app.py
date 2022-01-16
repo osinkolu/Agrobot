@@ -170,7 +170,7 @@ def main():
         output_from_the_image(detector,image_np,language)
 
     elif option == 'Use demo image 02':
-        demo_img = "tempDir\hgic_veg_septoria leaf spot1_1600.jpg"
+        demo_img = "tempDir/hgic_veg_septoria leaf spot1_1600.jpg"
         st.image(demo_img)
         im = Image.open(demo_img)
         im.thumbnail((512, 512), Image.ANTIALIAS)
@@ -185,7 +185,7 @@ def main():
         output_from_the_image(detector,image_np,language)
 
     elif option == 'Use demo image 03':
-        demo_img = "tempDir\corn-Goss-NCLB-lesions-same-leaf.jpg"
+        demo_img = "tempDir/corn-Goss-NCLB-lesions-same-leaf.jpg"
         st.image(demo_img)
         im = Image.open(demo_img)
         im.thumbnail((512, 512), Image.ANTIALIAS)
