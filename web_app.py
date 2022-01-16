@@ -22,6 +22,26 @@ from search_and_translate import search_and_translate,translate_alone
 
 lang_table = pd.read_csv("languages_by_victor.csv")
 
+def output_from_the_image(detector,image_np,language):
+  # Run object detection estimation using the model.
+  detections = detector.detect(image_np)
+  image_np, class_name = visualize(image_np, detections)
+                                        
+            
+  st.image(Image.fromarray(image_np), use_column_width=True)
+  #Write label name
+  st.write(translate_alone(class_name, language))
+  # Search and Translate.
+  st.info(search_and_translate(class_name, language))
+  # Intoduce cure
+  st.write(translate_alone("Latest on Curing", language))
+  # Search and Translate Cure.
+  st.info(search_and_translate("how to cure" + class_name, language))
+  # Reminder to change settings above
+  st.write(translate_alone("Feel free to change language in settings to view results in your local language", language))
+
+
+
 def main():
     
     # ===================== Set page config and background =======================
@@ -74,7 +94,7 @@ def main():
     # choosing the input method for the app.
     option = st.selectbox(
         'Please select photo input type',
-        ('None', 'Take photo', 'Upload photo'))
+        ('None', 'Take photo', 'Upload photo',"Use demo image 01","Use demo image 02","Use demo image 03"))
     
     # Start with app logic:
     if option == 'Take photo':
@@ -102,13 +122,7 @@ def main():
 )
 
             detector = ObjectDetector(model_path='model zoo/'+model_option+'.tflite', options=options)
-
-            # Run object detection estimation using the model.
-            detections = detector.detect(image_np)
-            image_np = visualize(image_np, detections)
-
-            st.image(Image.fromarray(image_np), 
-                     use_column_width=True)
+            output_from_the_image(detector,image_np,language)
             
         else:
             
@@ -137,30 +151,54 @@ def main():
 )
 
             detector = ObjectDetector(model_path='model zoo/'+model_option+'.tflite', options=options)
+            output_from_the_image(detector,image_np,language)
 
-            # Run object detection estimation using the model.
-            detections = detector.detect(image_np)
-            image_np, class_name = visualize(image_np, detections)
-                                        
-            
-            st.image(Image.fromarray(image_np), use_column_width=True)
+    elif option == 'Use demo image 01':
+        demo_img = "tempDir/10609.jpg"
+        st.image(demo_img)
 
-            #Write label name
-            st.write(translate_alone(class_name, language))
+        im = Image.open(demo_img)
+        im.thumbnail((512, 512), Image.ANTIALIAS)
+        image_np = np.asarray(im)
 
-            # Search and Translate.
-            st.info(search_and_translate(class_name, language))
 
-            # Intoduce cure
+        options = ObjectDetectorOptions(
+        num_threads=4,
+        score_threshold=thresh,
+        )
+        detector = ObjectDetector(model_path='model zoo/'+model_option+'.tflite', options=options)
+        output_from_the_image(detector,image_np,language)
 
-            st.write(translate_alone("Latest on Curing", language))
-            
-            # Search and Translate Cure.
-            st.info(search_and_translate("how to cure" + class_name, language))
+    elif option == 'Use demo image 02':
+        demo_img = "tempDir\hgic_veg_septoria leaf spot1_1600.jpg"
+        st.image(demo_img)
+        im = Image.open(demo_img)
+        im.thumbnail((512, 512), Image.ANTIALIAS)
+        image_np = np.asarray(im)
 
-            # Reminder to change settings above
-            st.write(translate_alone("Feel free to change language in settings to view results in your local language", language))
-        
+
+        options = ObjectDetectorOptions(
+        num_threads=4,
+        score_threshold=thresh,
+        )
+        detector = ObjectDetector(model_path='model zoo/'+model_option+'.tflite', options=options)
+        output_from_the_image(detector,image_np,language)
+
+    elif option == 'Use demo image 03':
+        demo_img = "tempDir\corn-Goss-NCLB-lesions-same-leaf.jpg"
+        st.image(demo_img)
+        im = Image.open(demo_img)
+        im.thumbnail((512, 512), Image.ANTIALIAS)
+        image_np = np.asarray(im)
+
+
+        options = ObjectDetectorOptions(
+        num_threads=4,
+        score_threshold=thresh,
+        )
+        detector = ObjectDetector(model_path='model zoo/'+model_option+'.tflite', options=options)
+        output_from_the_image(detector,image_np,language)
+
     else:
         help.header(translate_alone("Please select the method you want to use to upload photo.", language))
         help.sub_text(translate_alone("Note: A.I may use up to 120 seconds for inference.", language))
