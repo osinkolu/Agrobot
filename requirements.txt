@@ -1,6 +1,6 @@
-opencv-contrib-python-headless==4.1.2.30
-streamlit==0.81.1
-streamlit_webrtc==0.20.0
+opencv-python-headless
+streamlit
+streamlit_webrtc
 tensorflow
 tflite-model-maker
 tflite-support
