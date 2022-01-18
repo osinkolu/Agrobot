@@ -189,7 +189,7 @@ class ObjectDetector:
           can be anything since the image will be immediately resized according
           to the needs of the model within this function.
     Returns:
-        A Person instance.
+        A Class instance.
     """
     image_height, image_width, _ = input_image.shape
 
