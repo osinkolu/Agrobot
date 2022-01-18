@@ -25,18 +25,21 @@ lang_table = pd.read_csv("languages_by_victor.csv")
 def output_from_the_image(detector,image_np,language):
   # Run object detection estimation using the model.
   detections = detector.detect(image_np)
-  image_np, class_name = visualize(image_np, detections)
+  try:
+      image_np, class_name = visualize(image_np, detections)
+  except Exception:
+      image_np, class_name = image_np, "Nothing"
                                         
             
   st.image(Image.fromarray(image_np), use_column_width=True)
   #Write label name
   st.write(translate_alone(class_name, language))
   # Search and Translate.
-  st.info(search_and_translate(class_name, language))
+  st.info(search_and_translate("what is "+ class_name, language))
   # Intoduce cure
   st.write(translate_alone("Latest on Curing", language))
   # Search and Translate Cure.
-  st.info(search_and_translate("how to cure" + class_name, language))
+  st.info(search_and_translate("how to cure " + class_name, language))
   # Reminder to change settings above
   st.write(translate_alone("Feel free to change language in settings to view results in your local language", language))
 
@@ -140,8 +143,9 @@ def main():
             with open(os.path.join("tempDir",uploaded_file.name),"wb") as f: 
                 f.write(uploaded_file.getbuffer())  
              
-            im = Image.open("tempDir/" + uploaded_file.name)
+            im = Image.open("tempDir/" + uploaded_file.name).convert('RGB')
             im.thumbnail((512, 512), Image.ANTIALIAS)
+
             image_np = np.asarray(im)
 
 
@@ -170,7 +174,7 @@ def main():
         output_from_the_image(detector,image_np,language)
 
     elif option == 'Use demo image 02':
-        demo_img = "tempDir/hgic_veg_septoria leaf spot1_1600.jpg"
+        demo_img = "tempDir\hgic_veg_septoria leaf spot1_1600.jpg"
         st.image(demo_img)
         im = Image.open(demo_img)
         im.thumbnail((512, 512), Image.ANTIALIAS)
@@ -185,7 +189,7 @@ def main():
         output_from_the_image(detector,image_np,language)
 
     elif option == 'Use demo image 03':
-        demo_img = "tempDir/corn-Goss-NCLB-lesions-same-leaf.jpg"
+        demo_img = "tempDir\corn-Goss-NCLB-lesions-same-leaf.jpg"
         st.image(demo_img)
         im = Image.open(demo_img)
         im.thumbnail((512, 512), Image.ANTIALIAS)
@@ -201,7 +205,7 @@ def main():
 
     else:
         help.header(translate_alone("Please select the method you want to use to upload photo.", language))
-        help.sub_text(translate_alone("Note: A.I may use up to 30 seconds for inference.", language))
+        help.sub_text(translate_alone("Note: A.I may use up to 120 seconds for inference.", language))
 
 if __name__ == "__main__":
     main()     
