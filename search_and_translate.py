@@ -13,7 +13,7 @@ from googletrans import Translator
 translator = Translator()
 def search_and_translate(search_string, dest_language):
   params = {
-    "q": "what is "+ search_string,
+    "q": search_string,
     "hl": "en",
     "gl": "us",
     "api_key": "29a59059862fcd77aa92adc11a1b1db2e7edf7faa028ec0080c27e3df3dcca76"
@@ -35,8 +35,10 @@ def search_and_translate(search_string, dest_language):
           answers = (results["organic_results"][0]["snippet"])
         except Exception:
           answers = ("No results found")
-
-  return(translator.translate(answers, dest=dest_language, src= 'en').text)
+  if search_string.split()[-1] == "Nothing":
+    return(translator.translate("I'm sorry I didn't find anything. Kindly refer to the list of possible detections above, or reduce the threshold in settings.Thanks for your understanding.", dest=dest_language, src= 'en').text)
+  else:
+    return(translator.translate(answers, dest=dest_language, src= 'en').text)
 
 def translate_alone(answers,dest_language):
   return(translator.translate(answers, dest=dest_language, src= 'en').text)
