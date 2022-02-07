@@ -9,6 +9,7 @@ A streamlit app to call streamlit component webrtc and load a tf lite model for 
 """
 
 # import main packages
+from pickletools import string1
 import streamlit as st 
 from PIL import Image # PIL is used to display images 
 import os # used to save images in a directory
@@ -22,7 +23,7 @@ from search_and_translate import search_and_translate,translate_alone
 
 lang_table = pd.read_csv("languages_by_victor.csv")
 
-def output_from_the_image(detector,image_np,language):
+def output_from_the_image(detector,image_np,language, model_option):
   # Run object detection estimation using the model.
   detections = detector.detect(image_np)
   try:
@@ -32,16 +33,31 @@ def output_from_the_image(detector,image_np,language):
                                         
             
   st.image(Image.fromarray(image_np), use_column_width=True)
+
   #Write label name
   st.write(translate_alone(class_name, language))
+
+  # fixing search string depending on the model selected
+  print(model_option)
+
+  if model_option == "fruits_harvest":
+      string1 = ""
+      string2 = "Top health benefits of "
+      string3 = "Health benefits of "
+  else:
+      string1 = "what is "
+      string2 = "Latest on curing "
+      string3 = "how to cure "
+
+
   # Search and Translate.
-  st.info(search_and_translate("what is "+ class_name, language))
+  st.info(search_and_translate(string1+ class_name, language))
   # Intoduce cure
-  st.write(translate_alone("Latest on Curing", language))
+  st.write(translate_alone(string2, language))
   # Search and Translate Cure.
-  st.info(search_and_translate("how to cure " + class_name, language))
+  st.info(search_and_translate(string3 + class_name, language))
   # Reminder to change settings above
-  st.write(translate_alone("Feel free to change language in settings to view results in your local language", language))
+  st.write(translate_alone("Please feel free to change the language in settings to view results in your preferred local language", language))
 
 
 
@@ -85,7 +101,7 @@ def main():
 
     with st.expander("Settings"):
         # choose your model type
-        model_option = st.selectbox('Kindly select use case or preferred model',('crop_disease','Pests_attack (Not available yet)'))
+        model_option = st.selectbox('Kindly select use case or preferred model',('crop_disease','Pests_attack (Not available yet)','fruits_harvest'))
         
         # Get explainations in your native language
         language = st.selectbox('Get explainations in your preferred language',tuple(lang_table.language_name.values))
@@ -155,7 +171,7 @@ def main():
 )
 
             detector = ObjectDetector(model_path='model zoo/'+model_option+'.tflite', options=options)
-            output_from_the_image(detector,image_np,language)
+            output_from_the_image(detector,image_np,language,model_option)
 
     elif option == 'Use demo image 01':
         demo_img = "tempDir/10609.jpg"
@@ -171,6 +187,7 @@ def main():
         score_threshold=thresh,
         )
         detector = ObjectDetector(model_path='model zoo/'+model_option+'.tflite', options=options)
+        print(detector.model_path)
         output_from_the_image(detector,image_np,language)
 
     elif option == 'Use demo image 02':
