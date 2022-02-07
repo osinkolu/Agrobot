@@ -43,7 +43,7 @@ def output_from_the_image(detector,image_np,language, model_option):
   if model_option == "fruits_harvest":
       string1 = ""
       string2 = "Top health benefits of "
-      string3 = "Health benefits of "
+      string3 = "Health benefits"
   else:
       string1 = "what is "
       string2 = "Latest on curing "
