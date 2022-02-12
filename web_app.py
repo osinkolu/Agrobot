@@ -187,7 +187,6 @@ def main():
         score_threshold=thresh,
         )
         detector = ObjectDetector(model_path='model zoo/'+model_option+'.tflite', options=options)
-        print(detector.model_path)
         output_from_the_image(detector,image_np,language)
 
     elif option == 'Use demo image 02':
