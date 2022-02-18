@@ -141,7 +141,7 @@ def main():
 )
 
             detector = ObjectDetector(model_path='model zoo/'+model_option+'.tflite', options=options)
-            output_from_the_image(detector,image_np,language)
+            output_from_the_image(detector,image_np,language, model_option)
             
         else:
             
@@ -187,7 +187,7 @@ def main():
         score_threshold=thresh,
         )
         detector = ObjectDetector(model_path='model zoo/'+model_option+'.tflite', options=options)
-        output_from_the_image(detector,image_np,language)
+        output_from_the_image(detector,image_np,language, model_option)
 
     elif option == 'Use demo image 02':
         demo_img = "tempDir/hgic_veg_septoria leaf spot1_1600.jpg"
@@ -202,7 +202,7 @@ def main():
         score_threshold=thresh,
         )
         detector = ObjectDetector(model_path='model zoo/'+model_option+'.tflite', options=options)
-        output_from_the_image(detector,image_np,language)
+        output_from_the_image(detector,image_np,language, model_option)
 
     elif option == 'Use demo image 03':
         demo_img = "tempDir/corn-Goss-NCLB-lesions-same-leaf.jpg"
@@ -217,7 +217,7 @@ def main():
         score_threshold=thresh,
         )
         detector = ObjectDetector(model_path='model zoo/'+model_option+'.tflite', options=options)
-        output_from_the_image(detector,image_np,language)
+        output_from_the_image(detector,image_np,language, model_option)
 
     else:
         help.header(translate_alone("Please select the method you want to use to upload photo.", language))
