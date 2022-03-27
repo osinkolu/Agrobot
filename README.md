@@ -2,7 +2,7 @@
 
 This repository is home to the webrtc snapshot object detection Stremlit app, and multiple custom trained tflite object detection models hosted like a plug and play. That was a mouthful, right? :D
 
-####Deployed app on streamlit share is [here](https://share.streamlit.io/osinkolu/agrobot/main/web_app.py). 
+#### Deployed app on streamlit share is [here](https://share.streamlit.io/osinkolu/agrobot/main/web_app.py). 
 
 # App parts 🖥
 
