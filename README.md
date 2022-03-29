@@ -4,7 +4,7 @@
 To make the Agrobot a model place for Agro-related-A.I, we've added a weeds model to help detect weeds in the farm.
 
 #### Deployed app on streamlit share is [here](https://share.streamlit.io/osinkolu/agrobot/main/web_app.py).
-.......................................................................................................
+
 # Streamlitwebcam 📸
 
 This repository is home to the webrtc snapshot object detection Stremlit app, and multiple custom trained tflite object detection models hosted like a plug and play. That was a mouthful, right? :D
