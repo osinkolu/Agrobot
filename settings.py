@@ -49,5 +49,5 @@ class model_influencer:
             self.demo2 = "tempDir/weed_test_02.jpg"
             self.demo3 = "tempDir/weed_test_03.jpg"
             self.string1 = ""
-            self.string2 = "Some advice on removing "
+            self.string2 = "Some advice on removing weeds"
             self.string3 = "how to remove "
