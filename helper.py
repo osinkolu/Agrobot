@@ -97,16 +97,16 @@ def expander():
     expander_text = """
         <p> Object detection functionality &#10024 </p>
         <p> The models used here are <b>tflite</b> models, the notebook & codes on how I built the A.I models from scratch are in my github repo 
-        <a href= 'https://github.com/osinkolu?tab=repositories' style="color:#F26531;" >here</a>. They will be kept private until the project is completed.
+        <a href= 'https://github.com/osinkolu?tab=repositories' style="color:#F26531;" target = "_blank" >here  </a>. They will be kept private until the project is completed.
         My name is Olufemi Victor Tolulope, an ML and A.I enthusiast, feel free to reach out on
-        <a href = 'https://www.linkedin.com/in/olufemi-victor-tolulope/' style="color:#F26531;" >LinkedIn</a>. </p>
+        <a href = 'https://www.linkedin.com/in/olufemi-victor-tolulope/' style="color:#F26531;" target = "_blank" >LinkedIn</a>. </p>
         <p> Snapshot functionality &#128247 </p>
         <p> The webrtc snapshot functionality was shared in 
-        <a href = 'https://discuss.streamlit.io/t/new-component-streamlit-webrtc-a-new-way-to-deal-with-real-time-media-streams/8669/23?u=whitphx'  style="color:#F26531;" > this discussion </a> 
+        <a href = 'https://discuss.streamlit.io/t/new-component-streamlit-webrtc-a-new-way-to-deal-with-real-time-media-streams/8669/23?u=whitphx'  style="color:#F26531;" target = "_blank" > this discussion  </a> 
         by the author of the component 
-        <a href = 'https://github.com/whitphx'  style="color:#F26531;" > whitphx </a>. </p> 
+        <a href = 'https://github.com/whitphx'  style="color:#F26531;" target = "_blank" > whitphx </a>. </p> 
         <p> Big thanks to Tijana Nikolic who created the 
-        <a href = 'https://medium.com/@tijana.nikolic'  style="color:#F26531;" > blog post </a> 
+        <a href = 'https://medium.com/@tijana.nikolic'  style="color:#F26531;"  target = "_blank" > blog post  </a> 
         I used to learn streamlit, she made it really easy</p>
         <p> Thanks so much to both authors and their amazing work &#129330 </p>
         """

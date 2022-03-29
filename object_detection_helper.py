@@ -12,8 +12,9 @@ Basically, This script does the heavy lifting regards making your predictions,
 It contains helpers that take in the input image and spits out image with bbox drawn. Fantastic right?
 """
 
-#Load the trained TFLite model and define some visualization functions
+#Load the trained TFLite model and define some visualization functions.
 
+#Respect and Acknowledgements to the TensorFlow Team.
 #This code comes from the TFLite Object Detection [Raspberry Pi sample](https://github.com/tensorflow/examples/tree/master/lite/examples/object_detection/raspberry_pi).
 
 # import basic libraries

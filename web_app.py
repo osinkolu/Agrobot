@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Modified on Tuesday January 4 12:36:03 2022
+First modified on Tuesday January 4 12:36:03 2022
 
-@author: Olufemi Victor tolulope. @osinkolu on github.
-@Original author: TNIKOLIC
+@author: Olufemi Victor Tolulope. @osinkolu on github.
+Comments and explanations done by Olufemi Victor Tolulpe.
+@Teacher: TNIKOLIC
 
 A streamlit app to call streamlit component webrtc and load a tf lite model for object detection
 """
@@ -19,6 +20,7 @@ import helper as help
 import numpy as np
 import pandas as pd
 from search_and_translate import search_and_translate,translate_alone
+from settings import model_influencer
 
 
 lang_table = pd.read_csv("languages_by_victor.csv")
@@ -38,12 +40,12 @@ def output_from_the_image(detector,image_np,language, model_option):
   st.write(translate_alone(class_name, language))
 
   # fixing search string depending on the model selected
-  print(model_option)
+  # print(model_option)
 
   if model_option == "fruits_harvest":
       string1 = ""
       string2 = "Top health benefits of "
-      string3 = "Health benefits"
+      string3 = "Health benefits of "
   else:
       string1 = "what is "
       string2 = "Latest on curing "
@@ -58,6 +60,22 @@ def output_from_the_image(detector,image_np,language, model_option):
   st.info(search_and_translate(string3 + class_name, language))
   # Reminder to change settings above
   st.write(translate_alone("Please feel free to change the language in settings to view results in your preferred local language", language))
+
+def UX_main(image_np, thresh, model_option, language):
+    options = ObjectDetectorOptions(
+    num_threads=4,
+    score_threshold=thresh,
+    )
+    detector = ObjectDetector(model_path='model zoo/'+model_option+'.tflite', options=options)
+    output_from_the_image(detector,image_np,language, model_option)
+
+def roll_the_UX(demo_img, thresh, model_option, language):
+    st.image(demo_img)
+    im = Image.open(demo_img)
+    im.thumbnail((512, 512), Image.ANTIALIAS)
+    image_np = np.asarray(im)
+    UX_main(image_np, thresh, model_option, language)
+
 
 
 
@@ -93,22 +111,24 @@ def main():
     
     # ============================= Main app =====================================
 
-    with st.expander("List of Possible Detections"):
-        help.sub_text("This contains the list of what the A.I can detect in order of best accuracy.<p> </p>Blueberry leaf <p> </p> Tomato leaf yellow virus <p> </p> Peach leaf <p> </p> Raspberry leaf <p> </p> Strawberry leaf <p> </p> Tomato Septoria leaf spot <p> </p> Tomato leaf <p> </p> Corn leaf blight <p> </p> Bell_pepper leaf <p> </p> Potato leaf early blight <p> </p> Tomato mold leaf <p> </p> Tomato leaf bacterial spot <p> </p> Soyabean leaf <p> </p> Bell_pepper leaf spot <p> </p> Tomato leaf mosaic virus <p> </p> Squash Powdery mildew leaf <p> </p> Apple leaf <p> </p> Potato leaf late blight <p> </p> Cherry leaf <p> </p> grape leaf <p> </p> Tomato leaf late blight <p> </p> Tomato Early blight leaf <p> </p> Apple rust leaf <p> </p> Apple Scab Leaf <p> </p> grape leaf black rot <p> </p> Corn rust leaf <p> </p> Corn Gray leaf spot <p> </p> Soybean leaf <p> </p> Potato leaf <p> </p> Tomato two spotted spider mites leaf <p> </p>")
-    
-
-
+   # model = model_influencer("crop_disease")
+   # model.set_params()
+        # Get explainations 
 
     with st.expander("Settings"):
         # choose your model type
-        model_option = st.selectbox('Kindly select use case or preferred model',('crop_disease','Pests_attack (Not available yet)','fruits_harvest'))
-        
+        model_option = st.selectbox('Kindly select use case or preferred model',('crop_disease','Pests_attack (Not available yet)','fruits_harvest', 'weeds'))
+        model = model_influencer(model_option)
+        model.set_params()
         # Get explainations in your native language
         language = st.selectbox('Get explainations in your preferred language',tuple(lang_table.language_name.values))
         language = lang_table[lang_table["language_name"]==language].language_name.values[0]
         # I used a slider to set-up an adjustable threshold
-        thresh = st.slider("Set threshold for predictions.",0.0,1.0,0.5,0.05)
+        thresh = st.slider("Set threshold for predictions.",0.0,1.0,model.initial_threshold,0.05)
         st.write('Threshold:', thresh, )
+
+    with st.expander("List of Possible Detections"):
+        help.sub_text(model.detectables)
 
     # choosing the input method for the app.
     option = st.selectbox(
@@ -134,17 +154,10 @@ def main():
             im.thumbnail((512, 512), Image.ANTIALIAS)
             image_np = np.asarray(im)
 
+            UX_main(image_np, thresh, model_option, language)
 
-            options = ObjectDetectorOptions(
-            num_threads=4,
-            score_threshold=thresh,
-)
-
-            detector = ObjectDetector(model_path='model zoo/'+model_option+'.tflite', options=options)
-            output_from_the_image(detector,image_np,language, model_option)
-            
         else:
-            
+
             st.warning('Waiting for snapshot to be taken')
            
     # If option is upload photo, allow upload and pass to model
@@ -159,66 +172,21 @@ def main():
             with open(os.path.join("tempDir",uploaded_file.name),"wb") as f: 
                 f.write(uploaded_file.getbuffer())  
              
-            im = Image.open("tempDir/" + uploaded_file.name).convert('RGB')
+            im = Image.open("tempDir/" + uploaded_file.name).convert('RGB') #convert in case we have a wierd number of channels in the image.
             im.thumbnail((512, 512), Image.ANTIALIAS)
 
             image_np = np.asarray(im)
 
-
-            options = ObjectDetectorOptions(
-            num_threads=4,
-            score_threshold=thresh,
-)
-
-            detector = ObjectDetector(model_path='model zoo/'+model_option+'.tflite', options=options)
-            output_from_the_image(detector,image_np,language,model_option)
+            UX_main(image_np, thresh, model_option, language)
 
     elif option == 'Use demo image 01':
-        demo_img = "tempDir/10609.jpg"
-        st.image(demo_img)
-
-        im = Image.open(demo_img)
-        im.thumbnail((512, 512), Image.ANTIALIAS)
-        image_np = np.asarray(im)
-
-
-        options = ObjectDetectorOptions(
-        num_threads=4,
-        score_threshold=thresh,
-        )
-        detector = ObjectDetector(model_path='model zoo/'+model_option+'.tflite', options=options)
-        output_from_the_image(detector,image_np,language, model_option)
+        roll_the_UX(model.demo1,thresh,model_option,language)
 
     elif option == 'Use demo image 02':
-        demo_img = "tempDir/hgic_veg_septoria leaf spot1_1600.jpg"
-        st.image(demo_img)
-        im = Image.open(demo_img)
-        im.thumbnail((512, 512), Image.ANTIALIAS)
-        image_np = np.asarray(im)
-
-
-        options = ObjectDetectorOptions(
-        num_threads=4,
-        score_threshold=thresh,
-        )
-        detector = ObjectDetector(model_path='model zoo/'+model_option+'.tflite', options=options)
-        output_from_the_image(detector,image_np,language, model_option)
+        roll_the_UX(model.demo2,thresh,model_option,language)
 
     elif option == 'Use demo image 03':
-        demo_img = "tempDir/corn-Goss-NCLB-lesions-same-leaf.jpg"
-        st.image(demo_img)
-        im = Image.open(demo_img)
-        im.thumbnail((512, 512), Image.ANTIALIAS)
-        image_np = np.asarray(im)
-
-
-        options = ObjectDetectorOptions(
-        num_threads=4,
-        score_threshold=thresh,
-        )
-        detector = ObjectDetector(model_path='model zoo/'+model_option+'.tflite', options=options)
-        output_from_the_image(detector,image_np,language, model_option)
-
+        roll_the_UX(model.demo3,thresh,model_option,language)
     else:
         help.header(translate_alone("Please select the method you want to use to upload photo.", language))
         help.sub_text(translate_alone("Note: A.I may use up to 120 seconds for inference.", language))
