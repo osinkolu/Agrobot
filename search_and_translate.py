@@ -3,7 +3,7 @@
 Created on Friday January 14 1:27:03 2022
 Created to search and translate search results in other languages.
 
-@author: Olufemi Victor tolulope. @osinkolu on github.
+@author: Olufemi Victor tolulope. @osinkolu on github..
 
 Helper script with functions to call google's seach and translate libraries.
 """
