@@ -34,9 +34,9 @@ class model_influencer:
         elif self.name == "fruits_harvest":
             self.detectables = "This contains the list of what the A.I can detect in order of best accuracy. <p> </p> Beetroot <p> </p> Avocado<p> </p> Kiwi <p> </p> Peach<p> </p> Mandarine <p> </p> Orange <p> </p> Ginger <p> </p> Banana <p> </p> Kumquats <p> </p> Onion <p> </p> Cactus <p> </p> Plum <p> </p> Kaki <p> </p> Tomato <p> </p> Pineapple <p> </p> Cauliflower <p> </p> Pepper <p> </p> Melon <p> </p> Nectarine <p> </p> Papaya <p> </p> Pear <p> </p> Redcurrant <p> </p> Apple <p> </p> Huckleberry <p> </p> Guava <p> </p> Limes <p> </p> Granadilla <p> </p> Lemon <p> </p> Mango <p> </p> Strawberry <p> </p> Physalis <p> </p> Quince <p> </p> Kohlrabi <p> </p> Pepino <p> </p> Rambutan <p> </p> Salak <p> </p> Eggplant <p> </p> Maracuja <p> </p> Nut <p> </p> Walnut <p> </p> Grapefruit <p> </p> Mangostan <p> </p> Pomegranate <p> </p> Hazelnut <p> </p> Mulberry <p> </p> Tamarillo <p> </p> Tangelo <p> </p> Cantaloupe <p> </p> Potato <p> </p> Chestnut <p> </p> Cherry <p> </p> Clementine <p> </p> Lychee <p> </p> Apricot <p> </p> Dates <p> </p> Cocos <p> </p> Pomelo <p> </p> Grape <p> </p> Passion <p> </p> Carambula <p> </p> Blueberry <p> </p> Pitahaya <p> </p> Raspberry <p> </p>"
             self.initial_threshold = 0.3
-            self.demo1 = "tempDir\syn_fruit01.PNG"
-            self.demo2 = "tempDir\syn_fruit02.PNG"
-            self.demo3 = "tempDir\syn_fruit03.PNG"
+            self.demo1 = "tempDir/syn_fruit01.PNG"
+            self.demo2 = "tempDir/syn_fruit02.PNG"
+            self.demo3 = "tempDir/syn_fruit03.PNG"
             self.string1 = ""
             self.string2 = "Top health benefits of "
             self.string3 = "Health benefits of "
