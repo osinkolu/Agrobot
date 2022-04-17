@@ -1,6 +1,6 @@
 # Update (April 2022): Chicken detection model added.
 
-TWe updated the model zoo with a model to detect and count the number of chickens.
+We updated the model zoo with a model to detect and count the number of chickens.
 
 #### Deployed app on streamlit share is [here](https://share.streamlit.io/osinkolu/agrobot/main/web_app.py).
 
