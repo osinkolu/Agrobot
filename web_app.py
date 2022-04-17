@@ -67,7 +67,7 @@ def UX_main(image_np, thresh, model, language):
 def roll_the_UX(demo_img, thresh, model, language):
     st.image(demo_img)
     im = Image.open(demo_img)
-    im.thumbnail((512, 512), Image.ANTIALIAS)
+    im.thumbnail((512, 512), Image.ANTIALIAS).convert('RGB') #convert in case we have a wierd number of channels in the image.
     image_np = np.asarray(im)
     UX_main(image_np, thresh, model, language)
 
@@ -145,7 +145,7 @@ def main():
             
             file_name = help.write_image(out_image)
 
-            im = Image.open(file_name)
+            im = Image.open(file_name).convert('RGB')  #convert in case we have a wierd number of channels in the image.
             im.thumbnail((512, 512), Image.ANTIALIAS)
             image_np = np.asarray(im)
 
