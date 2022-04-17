@@ -38,7 +38,7 @@ class model_influencer:
             self.demo2 = "tempDir/syn_fruit02.PNG"
             self.demo3 = "tempDir/syn_fruit03.PNG"
             self.string1 = ""
-            self.string2 = "Top health benefits of "
+            self.string2 = "Top health benefits"
             self.string3 = "Health benefits of "
 
             #if the weeds model is selected.
