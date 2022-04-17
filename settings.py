@@ -55,6 +55,7 @@ class model_influencer:
             self.string2 = "Some advice on removing weeds"
             self.string3 = "how to remove "
 
+            #if the Chicken model is selected.
         elif self.name == "chicken":
             self.type = "count"
             self.detectables = "This contains the list of what the A.I can detect in order of best accuracy. <p> </p> Weeds <p> </p>"
