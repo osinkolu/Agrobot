@@ -324,6 +324,7 @@ def visualize(
     # Draw label and score
     category = detection.categories[0]
     class_name = category.label
+    num_detections = len(detections)
     probability = round(category.score, 2)
     result_text = class_name + ' (' + str(probability) + ')'
     text_location = (_MARGIN + detection.bounding_box.left,
@@ -331,4 +332,4 @@ def visualize(
     putText(image, result_text, text_location, FONT_HERSHEY_PLAIN,
                 _FONT_SIZE, _TEXT_COLOR, _FONT_THICKNESS)
 
-  return(image,class_name)
+  return(image,class_name,num_detections)

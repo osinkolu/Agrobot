@@ -24,52 +24,58 @@ from settings import model_influencer
 
 lang_table = pd.read_csv("languages_by_victor.csv")
 
-def output_from_the_image(detector,image_np,language, model):
-  # Run object detection estimation using the model.
-  detections = detector.detect(image_np)
-  try:
-      image_np, class_name = visualize(image_np, detections)
-  except Exception:
-      image_np, class_name = image_np, "Nothing"
+def output_from_the_image(detector,image_np,language, model, type):
+    # Run object detection estimation using the model.
+    detections = detector.detect(image_np)
+    try:
+        image_np, class_name,num_detections = visualize(image_np, detections)
+    except Exception:
+        image_np, class_name, num_detections = image_np, "Nothing", "0"
                                         
             
-  st.image(Image.fromarray(image_np), use_column_width=True)
+    st.image(Image.fromarray(image_np), use_column_width=True)
 
-  #Write label name
-  st.write(translate_alone(class_name, language))
+    #Write label name
+    st.write(translate_alone(class_name, language))
 
-  # fixing search string depending on the model selected
-  # print(model_option)
+    # fixing search string depending on the model selected
+    # print(model_option)
 
-  string1 = model.string1
-  string2 = model.string2
-  string3 = model.string3
+    string1 = model.string1
+    string2 = model.string2
+    string3 = model.string3
+
+    if type == "search":
+        # Search and Translate.
+        st.info(search_and_translate(string1+ class_name, language))
+        # Intoduce cure
+        st.write(translate_alone(string2, language))
+        # Search and Translate Cure.
+        st.info(search_and_translate(string3 + class_name, language))
+
+    elif type == "count":
+        st.info("I can count " + num_detections)
+    
+    # Reminder to change settings above
+    st.write(translate_alone("Please feel free to change the language in settings to view results in your preferred local language", language))
 
 
 
-  # Search and Translate.
-  st.info(search_and_translate(string1+ class_name, language))
-  # Intoduce cure
-  st.write(translate_alone(string2, language))
-  # Search and Translate Cure.
-  st.info(search_and_translate(string3 + class_name, language))
-  # Reminder to change settings above
-  st.write(translate_alone("Please feel free to change the language in settings to view results in your preferred local language", language))
 
-def UX_main(image_np, thresh, model, language):
+def UX_main(image_np, thresh, model, language,type):
     options = ObjectDetectorOptions(
     num_threads=4,
     score_threshold=thresh,
     )
     detector = ObjectDetector(model_path='model zoo/'+model.name+'.tflite', options=options)
-    output_from_the_image(detector,image_np,language, model)
+    output_from_the_image(detector,image_np,language, model,type)
 
-def roll_the_UX(demo_img, thresh, model, language):
+def roll_the_UX(demo_img, thresh, model, language,type):
     st.image(demo_img)
     im = Image.open(demo_img).convert('RGB') #convert in case we have a wierd number of channels in the image.
     im.thumbnail((512, 512), Image.ANTIALIAS)
     image_np = np.asarray(im)
-    UX_main(image_np, thresh, model, language)
+    UX_main(image_np, thresh, model, language,type)
 
 
 
@@ -112,7 +118,7 @@ def main():
 
     with st.expander("Settings"):
         # choose your model type
-        model_option = st.selectbox('Kindly select use case or preferred model',('crop_disease','Pests_attack (Not available yet)','fruits_harvest', 'weeds'))
+        model_option = st.selectbox('Kindly select use case or preferred model',('crop_disease','Pests_attack (Not available yet)','fruits_harvest', 'weeds', 'chicken'))
         model = model_influencer(model_option)
         model.set_params()
         # Get explainations in your native language
@@ -149,7 +155,7 @@ def main():
             im.thumbnail((512, 512), Image.ANTIALIAS)
             image_np = np.asarray(im)
 
-            UX_main(image_np, thresh, model, language)
+            UX_main(image_np, thresh, model, language, model.type)
 
         else:
 
@@ -172,16 +178,16 @@ def main():
 
             image_np = np.asarray(im)
 
-            UX_main(image_np, thresh, model, language)
+            UX_main(image_np, thresh, model, language,model.type)
 
     elif option == 'Use demo image 01':
-        roll_the_UX(model.demo1,thresh,model,language)
+        roll_the_UX(model.demo1,thresh,model,language,model.type)
 
     elif option == 'Use demo image 02':
-        roll_the_UX(model.demo2,thresh,model,language)
+        roll_the_UX(model.demo2,thresh,model,language,model.type)
 
     elif option == 'Use demo image 03':
-        roll_the_UX(model.demo3,thresh,model,language)
+        roll_the_UX(model.demo3,thresh,model,language,model.type)
     else:
         help.header(translate_alone("Please select the method you want to use to upload photo.", language))
         help.sub_text(translate_alone("Note: A.I may use up to 120 seconds for inference.", language))
