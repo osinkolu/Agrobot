@@ -10,7 +10,6 @@ A streamlit app to call streamlit component webrtc and load a tf lite model for 
 """
 
 # import main packages
-from pickletools import string1
 import streamlit as st 
 from PIL import Image # PIL is used to display images 
 import os # used to save images in a directory
