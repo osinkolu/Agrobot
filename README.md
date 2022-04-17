@@ -1,3 +1,8 @@
+# Update (April 2022): Chicken detection model added.
+
+We updated the model zoo with a model to detect and count the number of chickens.
+
+#### Deployed app on streamlit share is [here](https://share.streamlit.io/osinkolu/agrobot/main/web_app.py).
 
 # Update (March 2022): Weed detection model added.
 
@@ -8,8 +13,6 @@ To make the Agrobot a model place for Agro-related-A.I, we've added a weeds mode
 # Streamlitwebcam 📸
 
 This repository is home to the webrtc snapshot object detection Stremlit app, and multiple custom trained tflite object detection models hosted like a plug and play. That was a mouthful, right? :D
-
-#### Deployed app on streamlit share is [here](https://share.streamlit.io/osinkolu/agrobot/main/web_app.py). 
 
 # App parts 🖥
 
