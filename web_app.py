@@ -52,7 +52,7 @@ def output_from_the_image(detector,image_np,language, model, type):
         st.info(search_and_translate(string3 + class_name, language))
 
     elif type == "count":
-        st.info("I can count " + str(num_detections))
+        st.info("I can count " + str(num_detections) +" "+ class_name + "s"+ "here.")
     
     # Reminder to change settings above
     st.write(translate_alone("Please feel free to change the language in settings to view results in your preferred local language", language))
