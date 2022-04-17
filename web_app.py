@@ -9,7 +9,7 @@ Comments and explanations done by Olufemi Victor Tolulpe.
 A streamlit app to call streamlit component webrtc and load a tf lite model for object detection
 """
 
-# import main packages
+#  import main packages
 import streamlit as st 
 from PIL import Image # PIL is used to display images 
 import os # used to save images in a directory
