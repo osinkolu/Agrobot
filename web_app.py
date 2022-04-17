@@ -121,7 +121,6 @@ def main():
         model_option = st.selectbox('Kindly select use case or preferred model',('crop_disease','Pests_attack (Not available yet)','fruits_harvest', 'weeds', 'chicken'))
         model = model_influencer(model_option)
         model.set_params()
-        print(model.name)
         # Get explainations in your native language
         language = st.selectbox('Get explainations in your preferred language',tuple(lang_table.language_name.values))
         language = lang_table[lang_table["language_name"]==language].language_name.values[0]

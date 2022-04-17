@@ -60,6 +60,6 @@ class model_influencer:
             self.type = "count"
             self.detectables = "This contains the list of what the A.I can detect in order of best accuracy. <p> </p> Weeds <p> </p>"
             self.initial_threshold = 0.5
-            self.demo1 = "tempDir\chick001.jpg"
-            self.demo2 = "tempDir\chick002.jpg"
-            self.demo3 = "tempDir\chick003.jpg"
+            self.demo1 = "tempDir/chick001.jpg"
+            self.demo2 = "tempDir/chick002.jpg"
+            self.demo3 = "tempDir/chick003.jpg"
