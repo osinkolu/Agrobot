@@ -38,14 +38,12 @@ def output_from_the_image(detector,image_np,language, model, type):
     #Write label name
     st.write(translate_alone(class_name, language))
 
-    # fixing search string depending on the model selected
-    # print(model_option)
 
-    string1 = model.string1
-    string2 = model.string2
-    string3 = model.string3
-
+    # fixing search string depending on the model selected.
     if type == "search":
+        string1 = model.string1
+        string2 = model.string2
+        string3 = model.string3
         # Search and Translate.
         st.info(search_and_translate(string1+ class_name, language))
         # Intoduce cure
