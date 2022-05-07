@@ -19,7 +19,7 @@ def search_and_translate(search_string, dest_language):
     "q": search_string,
     "hl": "en",
     "gl": "us",
-    "api_key": "405e05c08703d536cb7a0fff81f760391a7a2aec1c4e97ad39238da186d2af5d"
+    "api_key": api_key
   }
 
   search = GoogleSearch(params)
