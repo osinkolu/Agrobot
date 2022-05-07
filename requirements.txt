@@ -6,4 +6,4 @@ tflite-model-maker
 tflite-support
 googletrans==4.0.0-rc1
 google-search-results
-python-decouple
+python-dotenv
