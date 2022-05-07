@@ -32,7 +32,7 @@ I've embedded a search pipeline to search for pest or disease information as wel
 
 ## Language Translation 📣
 
-To resolve language barriers, I've also embedded Google's MLT to translate the crop diseases and detected pests' names to over 150 languages. This is quite important as many local farmers know the names of some crop diseases only in their local language. To maximize this, I allowed for translation on the search results, as well as the solutions proferred. Feel free to check out the library on [PyPi](https://pypi.org/project/googletrans/)
+To resolve language barriers, I've also embedded Google's MLT to translate the crop diseases and detected pests' names to over 150 languages. This is quite important as many local farmers know the names of some crop diseases only in their local language. To maximize this, I allowed for translation on the search results, as well as the solutions proferred. Feel free to check out the library on [PyPi](https://pypi.org/project/googletrans/).
 
 
 ## Streamlit boilerplate
