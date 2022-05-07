@@ -14,7 +14,7 @@ from dotenv import load_dotenv
 import os
 load_dotenv()
 
-api_key = ${{ secrets.my_api_key }}
+api_key = os.environ['my_api_key']
 print(api_key)
 translator = Translator()
 def search_and_translate(search_string, dest_language):
