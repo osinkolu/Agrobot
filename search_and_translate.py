@@ -12,10 +12,8 @@ from serpapi import GoogleSearch
 from googletrans import Translator
 from dotenv import load_dotenv
 import os
-load_dotenv()
 
-api_key = os.environ['my_api_key']
-print(api_key)
+api_key = os.environ['my_api_key']# key already stored as a secret on GitHub
 translator = Translator()
 def search_and_translate(search_string, dest_language):
   params = {
