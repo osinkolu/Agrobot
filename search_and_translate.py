@@ -10,13 +10,15 @@ Helper script with functions to call google's seach and translate libraries.
 
 from serpapi import GoogleSearch
 from googletrans import Translator
+from decouple import config
+api_key = config('my_api_key',default='')
 translator = Translator()
 def search_and_translate(search_string, dest_language):
   params = {
     "q": search_string,
     "hl": "en",
     "gl": "us",
-    "api_key": "405e05c08703d536cb7a0fff81f760391a7a2aec1c4e97ad39238da186d2af5d"
+    "api_key": api_key
   }
 
   search = GoogleSearch(params)
