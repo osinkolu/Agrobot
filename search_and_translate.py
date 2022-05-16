@@ -13,9 +13,10 @@ from googletrans import Translator
 from dotenv import load_dotenv
 import os
 
-load_dotenv(".env")
+load_dotenv()
 
 api_key = os.getenv('my_api_key')# key already stored as a secret on GitHub
+print(api_key)
 translator = Translator()
 def search_and_translate(search_string, dest_language):
   params = {
