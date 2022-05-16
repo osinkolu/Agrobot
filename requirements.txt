@@ -3,7 +3,7 @@ streamlit
 streamlit_webrtc
 tensorflow
 tflite-model-maker
-tflite-support
+tflite-support==0.4.0rc0
 googletrans==4.0.0-rc1
 google-search-results
 python-dotenv
