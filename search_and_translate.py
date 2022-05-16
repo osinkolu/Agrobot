@@ -13,7 +13,7 @@ from googletrans import Translator
 from dotenv import load_dotenv
 import os
 
-api_key = os.environ['MY_API_KEY']# key already stored as a secret on GitHub
+api_key = os.environ['my_api_key']# key already stored as a secret on GitHub
 translator = Translator()
 def search_and_translate(search_string, dest_language):
   params = {
