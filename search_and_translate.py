@@ -15,7 +15,7 @@ import os
 
 load_dotenv()
 
-api_key = os.getenv('my_api_key')# key already stored as a secret on GitHub
+api_key = os.environ['my_api_key']# key already stored as a secret on GitHub and mapped in workflow
 print(api_key)
 translator = Translator()
 def search_and_translate(search_string, dest_language):
