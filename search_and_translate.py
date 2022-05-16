@@ -10,10 +10,7 @@ Helper script with functions to call google's seach and translate libraries.
 
 from serpapi import GoogleSearch
 from googletrans import Translator
-from dotenv import load_dotenv
 import os
-
-load_dotenv()
 
 api_key = os.environ['my_api_key']# key already stored as a secret on GitHub and mapped in workflow
 print(api_key)
