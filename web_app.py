@@ -20,9 +20,11 @@ import numpy as np
 import pandas as pd
 from search_and_translate import search_and_translate,translate_alone
 from settings import model_influencer
+from find_nearby_business import find_nearby_pest_shop
 
 
 lang_table = pd.read_csv("languages_by_victor.csv")
+
 
 def output_from_the_image(detector,image_np,language, model, type):
     # Run object detection estimation using the model.
@@ -32,7 +34,7 @@ def output_from_the_image(detector,image_np,language, model, type):
     except Exception:
         image_np, class_name, num_detections = image_np, "Nothing", "0"
                                         
-            
+    #display detected image with bbox drawn on it
     st.image(Image.fromarray(image_np), use_column_width=True)
 
     #Write label name
@@ -51,12 +53,12 @@ def output_from_the_image(detector,image_np,language, model, type):
         # Search and Translate Cure.
         st.info(search_and_translate(string3 + class_name, language))
 
+    #The UI if we need to count rather than use search results 
     elif type == "count":
         st.info("I can count " + str(num_detections) +" "+ class_name + "s"+ " here.")
     
     # Reminder to change settings above
     st.write(translate_alone("Please feel free to change the language in settings to view results in your preferred local language", language))
-
 
 
 
@@ -76,16 +78,63 @@ def roll_the_UX(demo_img, thresh, model, language,type):
     UX_main(image_np, thresh, model, language,type)
 
 
+def find_nearby_shop_ux():
+    st.write("Hi there, We can help you find the nearest Pesticides and herbicides shop")
+    st.error("Do you permit us to use your location to improve results?")
+    Track_user = -1
+    col1, col2,= st.columns([1,1])
+    with col1:
+        if st.button("Yes sure, give me the best"):
+            Track_user = 1
+    with col2:
+        if st.button("No, don't use my location"):
+            Track_user = 0
+    if Track_user == 1:
+        shops_list  =  find_nearby_pest_shop(5)
+        business_names = shops_list[0]
+        business_status = shops_list[1]
+        address = shops_list[2]
+        latitudes = shops_list[3]
+        longitudes = shops_list[4]
+        for i in range(len(business_names)):
+            with st.expander(business_names[i]):
+                df = pd.DataFrame([latitudes[i],longitudes[i]]).T
+                df.columns = ['lat', 'lon']
+                st.map(df)
+                st.write("Address: " + address[i])
+                st.write("Current Status: "+business_status[i])
+    elif Track_user==0:
+        st.error("No worries, We've destroyed our location tracker, you can use google maps to find the nearest herbicides shops.")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 def main():
     
-    # ===================== Set page config and background =======================
-    # Main panel setup
-    # Set website details
-    st.set_page_config(page_title ="Victor's Crop Analysis Add-On", 
-                       page_icon=':camera:', 
-                       layout='centered')
     
     # Set the background
     help.set_bg_hack() 
@@ -191,4 +240,12 @@ def main():
         help.sub_text(translate_alone("Note: A.I may use up to 120 seconds for inference.", language))
 
 if __name__ == "__main__":
-    main()     
+    # ===================== Set page configs =======================
+    # Main panel setup
+    # Set website details
+    st.set_page_config(page_title ="Victor's Crop Analysis Add-On", page_icon=':camera:', layout='centered')
+    my_page = st.sidebar.radio('Page Navigation', ['Crop Analysis', 'Find pest control shop'])
+    if my_page == 'Crop Analysis':
+        main()
+    else:
+        find_nearby_shop_ux()
