@@ -1,4 +1,3 @@
-from msilib.schema import Class
 import requests
 import geocoder
 import pandas as pd
