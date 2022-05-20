@@ -1,4 +1,4 @@
-# Update (April 2022): Chicken detection model added
+# Update (April 2022): Chicken detection model added.
 
 We updated the model zoo with a model to detect and count the number of chickens.
 
