@@ -6,3 +6,4 @@ tflite-model-maker
 tflite-support==0.3.1
 googletrans==4.0.0-rc1
 google-search-results
+geocoder
