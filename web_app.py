@@ -21,6 +21,9 @@ import pandas as pd
 from search_and_translate import search_and_translate,translate_alone
 from settings import model_influencer
 from find_nearby_business import find_nearby_pest_shop
+from bokeh.models.widgets import Button
+from bokeh.models import CustomJS
+from streamlit_bokeh_events import streamlit_bokeh_events
 
 
 lang_table = pd.read_csv("languages_by_victor.csv")
@@ -244,8 +247,28 @@ if __name__ == "__main__":
     # Main panel setup
     # Set website details
     st.set_page_config(page_title ="Victor's Crop Analysis Add-On", page_icon=':camera:', layout='centered')
-    my_page = st.sidebar.radio('Page Navigation', ['Crop Analysis', 'Find pest control shop'])
+    my_page = st.sidebar.radio('Page Navigation', ['Crop Analysis', 'Find pest control shop', 'Test'])
     if my_page == 'Crop Analysis':
         main()
-    else:
+    elif my_page == 'Find pest control shop':
         find_nearby_shop_ux()
+    else:
+        loc_button = Button(label="Get Location")
+        loc_button.js_on_event("button_click", CustomJS(code="""
+            navigator.geolocation.getCurrentPosition(
+                (loc) => {
+                    document.dispatchEvent(new CustomEvent("GET_LOCATION", {detail: {lat: loc.coords.latitude, lon: loc.coords.longitude}}))
+                }
+            )
+            """))
+        result = streamlit_bokeh_events(
+            loc_button,
+            events="GET_LOCATION",
+            key="get_location",
+            refresh_on_update=False,
+            override_height=75,
+            debounce_time=0)
+
+        if result:
+            if "GET_LOCATION" in result:
+                st.write(result.get("GET_LOCATION"))
