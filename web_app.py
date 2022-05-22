@@ -272,3 +272,8 @@ if __name__ == "__main__":
         if result:
             if "GET_LOCATION" in result:
                 st.write(result.get("GET_LOCATION"))
+                lat = result.get("GET_LOCATION")["lat"]
+                lon = result.get("GET_LOCATION")["lon"]
+                df = pd.DataFrame([lat,lon]).T
+                df.columns = ['lat', 'lon']
+                st.map(df)
