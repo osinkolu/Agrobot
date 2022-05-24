@@ -88,9 +88,8 @@ def roll_the_UX(demo_img, thresh, model, language,type):
 def find_nearby_shop_ux():
     st.write("Hi there, We can help you find the nearest Pesticides and herbicides shop")
     st.error("Do you permit us to use your location to improve results?")
-    with st.spinner("Please wait, I'm Pulling in the tracker......."):
-        loc_button = Button(label="Get Location")
-        loc_button.js_on_event("button_click", CustomJS(code="""
+    loc_button = Button(label="Get Location")
+    loc_button.js_on_event("button_click", CustomJS(code="""
             navigator.geolocation.getCurrentPosition(
                     (loc) => {
                         document.dispatchEvent(new CustomEvent("GET_LOCATION", {detail: {lat: loc.coords.latitude, lon: loc.coords.longitude}}))
