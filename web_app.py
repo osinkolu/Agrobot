@@ -110,6 +110,7 @@ def find_nearby_shop_ux():
             lon = result.get("GET_LOCATION")["lon"]
             df = pd.DataFrame([lat,lon]).T
             df.columns = ['lat', 'lon']
+            st.info("This is where you are")
             st.map(df)
             try:
                 shops_list  =  find_nearby_pest_shop(5, lat, lon)
