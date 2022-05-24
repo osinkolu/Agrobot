@@ -95,7 +95,6 @@ def find_nearby_shop_ux():
                     }
                 )
                 """))
-    tracking = True
     result = streamlit_bokeh_events(
                 loc_button,
                 events="GET_LOCATION",
@@ -113,7 +112,9 @@ def find_nearby_shop_ux():
             st.info("This is where you are: We are searching for the nearest crop pest & disease control store.")
             st.map(df)
             try:
+                print("here")
                 shops_list  =  find_nearby_pest_shop(5, lat, lon)
+                print("passed")
                 business_names = shops_list[0]
                 business_status = shops_list[1]
                 address = shops_list[2]
