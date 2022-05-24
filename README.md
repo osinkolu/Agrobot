@@ -1,13 +1,12 @@
-# Feature Update (May 2022): Ability to find nearest pest control store.
+# Feature Update (May 2022): Ability to find nearest pest control store.🏬
 We've given more knowledge power to the farmers, after detecting pest or disease in the farm, they can use the nearby store tool to find the nearest pest control shops based on their current location.
+#### Deployed app on streamlit share is [here](https://share.streamlit.io/osinkolu/agrobot/main/web_app.py).
 
-# Update (April 2022): Chicken detection model added.
+# Update (April 2022): Chicken detection model added.🐔
 
 We updated the model zoo with a model to detect and count the number of chickens.
 
-#### Deployed app on streamlit share is [here](https://share.streamlit.io/osinkolu/agrobot/main/web_app.py).
-
-# Update (March 2022): Weed detection model added.
+# Update (March 2022): Weed detection model added.🍃
 
 To make the Agrobot a model place for Agro-related-A.I, we've added a weeds model to help detect weeds in the farm.
 
