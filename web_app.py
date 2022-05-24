@@ -108,9 +108,9 @@ def find_nearby_shop_ux():
         if "GET_LOCATION" in result:
             lat = result.get("GET_LOCATION")["lat"]
             lon = result.get("GET_LOCATION")["lon"]
-            m  = my_folium_map([lat,lon])
-            st_data = st_folium(m, width= 700)
             st.info("This is where you are: We are searching for the nearest crop pest & disease control store.")
+            m  = my_folium_map([[lat,lon]])
+            st_data = st_folium(m, width= 700)            
             try:
                 print("here")
                 shops_list  =  find_nearby_pest_shop(5, lat, lon)
@@ -120,9 +120,10 @@ def find_nearby_shop_ux():
                 address = shops_list[2]
                 latitudes = shops_list[3]
                 longitudes = shops_list[4]
+                locs = [[latitudes[i],longitudes[i]] for i in range(len(latitudes))] 
                 for i in range(len(business_names)):
                     with st.expander(business_names[i]):
-                        m  = my_folium_map([latitudes[i],longitudes[i]])
+                        m  = my_folium_map(locs)
                         st_data_ = st_folium(m, width= 700)
                         st.write("Address: " + address[i])
                         st.write("Current Status: "+business_status[i])

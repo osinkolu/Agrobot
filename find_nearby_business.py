@@ -26,8 +26,7 @@ def find_nearby_pest_shop(max_n, lat , lon):
     return([business_names, business_status, address, latitudes, longitudes])
 
 def my_folium_map(location):
-    m = folium.Map(location = location, zoom_start = 16)
-    folium.Marker(location, popup="Liberty Bell", tooltip="Liberty Bell").add_to(m)
-    return(m)
-
-    st_data = st_folium(m, width = 725)
+    m = folium.Map(location = location[0], zoom_start = 16)
+    for i in location:
+        folium.Marker(location, popup="Liberty Bell", tooltip="Liberty Bell").add_to(m)
+        return(m)
