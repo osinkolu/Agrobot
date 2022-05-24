@@ -20,7 +20,8 @@ import numpy as np
 import pandas as pd
 from search_and_translate import search_and_translate,translate_alone # import functions from the script
 from settings import model_influencer # very important to attribute your models
-from find_nearby_business import find_nearby_pest_shop #import to find nearby shops.
+from find_nearby_business import find_nearby_pest_shop, my_folium_map #import to find nearby shops.
+from streamlit_folium import st_folium
 
 # import what you need to track users.
 from bokeh.models.widgets import Button
@@ -107,6 +108,8 @@ def find_nearby_shop_ux():
         if "GET_LOCATION" in result:
             lat = result.get("GET_LOCATION")["lat"]
             lon = result.get("GET_LOCATION")["lon"]
+            m  = my_folium_map([lat,lon])
+            st_data = st_folium(m, width = 725)
             df = pd.DataFrame([lat,lon]).T
             df.columns = ['lat', 'lon']
             st.info("This is where you are: We are searching for the nearest crop pest & disease control store.")
@@ -253,3 +256,6 @@ if __name__ == "__main__":
         main()
     elif my_page == 'Find pest control shop':
         find_nearby_shop_ux()
+    else:
+        m = leafmap.Map(google_map="TERRAIN")
+        m
