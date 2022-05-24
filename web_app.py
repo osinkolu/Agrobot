@@ -109,7 +109,7 @@ def find_nearby_shop_ux():
             lat = result.get("GET_LOCATION")["lat"]
             lon = result.get("GET_LOCATION")["lon"]
             m  = my_folium_map([lat,lon])
-            st_data = st_folium(m)
+            st_data = st_folium(m, width= 700)
             st.info("This is where you are: We are searching for the nearest crop pest & disease control store.")
             try:
                 print("here")
