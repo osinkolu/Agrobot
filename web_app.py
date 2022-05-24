@@ -247,7 +247,7 @@ def main():
 if __name__ == "__main__":
     # =========== Set page configs =======# Main panel setup======# Set website details
     st.set_page_config(page_title ="Victor's Crop Analysis Add-On", page_icon=':camera:', layout='centered')
-    my_page = st.sidebar.radio('Page Navigation', ['Crop Analysis', 'Find pest control shop', 'Test'])
+    my_page = st.sidebar.radio('Page Navigation', ['Crop Analysis', 'Find pest control shop'])
     if my_page == 'Crop Analysis':
         main()
     elif my_page == 'Find pest control shop':
