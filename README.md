@@ -1,3 +1,6 @@
+# Feature Update (May 2022): Enable users to find nearest Pest control store added.
+We've given more knowledge power to the farmers, after detecting pest or disease in the farm, they can use the nearby store tool to find the nearest pest control shops based on their current location.
+
 # Update (April 2022): Chicken detection model added.
 
 We updated the model zoo with a model to detect and count the number of chickens.
