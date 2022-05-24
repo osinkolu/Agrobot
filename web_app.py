@@ -252,6 +252,3 @@ if __name__ == "__main__":
         main()
     elif my_page == 'Find pest control shop':
         find_nearby_shop_ux()
-    else:
-        m = leafmap.Map(google_map="TERRAIN")
-        m
