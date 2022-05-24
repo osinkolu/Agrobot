@@ -109,11 +109,8 @@ def find_nearby_shop_ux():
             lat = result.get("GET_LOCATION")["lat"]
             lon = result.get("GET_LOCATION")["lon"]
             m  = my_folium_map([lat,lon])
-            st_data = st_folium(m, width = 725)
-            df = pd.DataFrame([lat,lon]).T
-            df.columns = ['lat', 'lon']
+            st_data = st_folium(m)
             st.info("This is where you are: We are searching for the nearest crop pest & disease control store.")
-            st.map(df)
             try:
                 print("here")
                 shops_list  =  find_nearby_pest_shop(5, lat, lon)
