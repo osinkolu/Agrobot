@@ -7,7 +7,7 @@ gcloud_api_key = os.environ['gcloud_api_key']
 print(gcloud_api_key)
 
 def find_nearby_pest_shop(max_n, lat , lon):
-    url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + str(lat) +"%2C" + str(lon) + "&radius=50000"  + "&keyword=Pest Control Services" + "&key=" + str(gcloud_api_key)+ '"'
+    url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + str(lat) +"%2C" + str(lon) + "&radius=50000"  + "&keyword=Pest Control Services" + "&key=AIzaSyAdqGSasNl5j98V7i8y9mZHlXU5uM1GTeg" #+ str(gcloud_api_key)+ '"'
     print("Read_below")
     print(url)
     payload={}
