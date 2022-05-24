@@ -123,7 +123,7 @@ def find_nearby_shop_ux():
                 for i in range(len(business_names)):
                     with st.expander(business_names[i]):
                         m  = my_folium_map([latitudes[i],longitudes[i]])
-                        st_data_ = st_folium(m)
+                        st_data_ = st_folium(m, width= 700)
                         st.write("Address: " + address[i])
                         st.write("Current Status: "+business_status[i])
             except:
