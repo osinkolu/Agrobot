@@ -122,9 +122,8 @@ def find_nearby_shop_ux():
                 longitudes = shops_list[4]
                 for i in range(len(business_names)):
                     with st.expander(business_names[i]):
-                        df = pd.DataFrame([latitudes[i],longitudes[i]]).T
-                        df.columns = ['lat', 'lon']
-                        st.map(df)
+                        m  = my_folium_map([latitudes[i],longitudes[i]])
+                        st_data_ = st_folium(m)
                         st.write("Address: " + address[i])
                         st.write("Current Status: "+business_status[i])
             except:
