@@ -1,19 +1,12 @@
 import requests
-import geocoder
 import pandas as pd
 import json
+import os
 
+gcloud_api_key = os.environ['gcloud_api_key']
 
-def track_me():
-    g = geocoder.ip('me')
-    loc = g.latlng
-    lat = loc[0]
-    lon = loc[1]
-    return(lat, lon)
-
-def find_nearby_pest_shop(max_n):
-    lat, lon = track_me()
-    url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + str(lat) +"%2C" + str(lon) + "&radius=1500"  + "&keyword=Pest Control Services" + "&key=AIzaSyAdqGSasNl5j98V7i8y9mZHlXU5uM1GTeg"
+def find_nearby_pest_shop(max_n, lat , lon):
+    url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + str(lat) +"%2C" + str(lon) + "&radius=50000"  + "&keyword=Pest Control Services" + "&key=" + str(gcloud_api_key)+ '"'
     print(url)
     payload={}
     headers = {}

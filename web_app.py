@@ -13,22 +13,24 @@ A streamlit app to call streamlit component webrtc and load a tf lite model for 
 import streamlit as st 
 from PIL import Image # PIL is used to display images 
 import os # used to save images in a directory
-from object_detection_helper import *
-import snapshot as snap
-import helper as help
-import numpy as np
+from object_detection_helper import * #import everything from object detection 
+import snapshot as snap #for your snapshot
+import helper as help # import my text script.
+import numpy as np 
 import pandas as pd
-from search_and_translate import search_and_translate,translate_alone
-from settings import model_influencer
-from find_nearby_business import find_nearby_pest_shop
+from search_and_translate import search_and_translate,translate_alone # import functions from the script
+from settings import model_influencer # very important to attribute your models
+from find_nearby_business import find_nearby_pest_shop #import to find nearby shops.
+
+# import what you need to track users.
 from bokeh.models.widgets import Button
 from bokeh.models import CustomJS
 from streamlit_bokeh_events import streamlit_bokeh_events
 
-
+# Bring in my language codes csv file
 lang_table = pd.read_csv("languages_by_victor.csv")
 
-
+#define a function to rollout UI from detections.
 def output_from_the_image(detector,image_np,language, model, type):
     # Run object detection estimation using the model.
     detections = detector.detect(image_np)
@@ -64,7 +66,7 @@ def output_from_the_image(detector,image_np,language, model, type):
     st.write(translate_alone("Please feel free to change the language in settings to view results in your preferred local language", language))
 
 
-
+# Direct function that draws the UI.
 def UX_main(image_np, thresh, model, language,type):
     options = ObjectDetectorOptions(
     num_threads=4,
@@ -73,6 +75,7 @@ def UX_main(image_np, thresh, model, language,type):
     detector = ObjectDetector(model_path='model zoo/'+model.name+'.tflite', options=options)
     output_from_the_image(detector,image_np,language, model,type)
 
+# Direct function that draws the UI.
 def roll_the_UX(demo_img, thresh, model, language,type):
     st.image(demo_img)
     im = Image.open(demo_img).convert('RGB') #convert in case we have a wierd number of channels in the image.
@@ -80,71 +83,66 @@ def roll_the_UX(demo_img, thresh, model, language,type):
     image_np = np.asarray(im)
     UX_main(image_np, thresh, model, language,type)
 
-
+#Define a function to find nearby Pesticides and herbicides shop. 
 def find_nearby_shop_ux():
     st.write("Hi there, We can help you find the nearest Pesticides and herbicides shop")
     st.error("Do you permit us to use your location to improve results?")
-    Track_user = -1
-    col1, col2,= st.columns([1,1])
-    with col1:
-        if st.button("Yes sure, give me the best"):
-            Track_user = 1
-    with col2:
-        if st.button("No, don't use my location"):
-            Track_user = 0
-    if Track_user == 1:
-        shops_list  =  find_nearby_pest_shop(5)
-        business_names = shops_list[0]
-        business_status = shops_list[1]
-        address = shops_list[2]
-        latitudes = shops_list[3]
-        longitudes = shops_list[4]
-        for i in range(len(business_names)):
-            with st.expander(business_names[i]):
-                df = pd.DataFrame([latitudes[i],longitudes[i]]).T
-                df.columns = ['lat', 'lon']
-                st.map(df)
-                st.write("Address: " + address[i])
-                st.write("Current Status: "+business_status[i])
-    elif Track_user==0:
+    loc_button = Button(label="Get Location")
+    loc_button.js_on_event("button_click", CustomJS(code="""
+            navigator.geolocation.getCurrentPosition(
+                    (loc) => {
+                        document.dispatchEvent(new CustomEvent("GET_LOCATION", {detail: {lat: loc.coords.latitude, lon: loc.coords.longitude}}))
+                    }
+                )
+                """))
+    tracking = True
+    result = streamlit_bokeh_events(
+                loc_button,
+                events="GET_LOCATION",
+                key="get_location",
+                refresh_on_update=False,
+                override_height=40,
+                debounce_time=0)
+
+    if result:
+        if "GET_LOCATION" in result:
+            lat = result.get("GET_LOCATION")["lat"]
+            lon = result.get("GET_LOCATION")["lon"]
+            df = pd.DataFrame([lat,lon]).T
+            df.columns = ['lat', 'lon']
+            st.map(df)
+            try:
+                shops_list  =  find_nearby_pest_shop(5, lat, lon)
+                business_names = shops_list[0]
+                business_status = shops_list[1]
+                address = shops_list[2]
+                latitudes = shops_list[3]
+                longitudes = shops_list[4]
+                for i in range(len(business_names)):
+                    with st.expander(business_names[i]):
+                        df = pd.DataFrame([latitudes[i],longitudes[i]]).T
+                        df.columns = ['lat', 'lon']
+                        st.map(df)
+                        st.write("Address: " + address[i])
+                        st.write("Current Status: "+business_status[i])
+            except:
+                st.warning("I'm sorry, we didn't find anybody closeby.")
+            
+    if st.button("Stop! don't use my location"):
+        del result
         st.error("No worries, We've destroyed our location tracker, you can use google maps to find the nearest herbicides shops.")
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#Write Main Script.
+#..............................................................................................................
 def main():
-    
-    
     # Set the background
     help.set_bg_hack() 
     # ===================== Set header and site info =============================
     # Set app header
     help.header('Crop Disease and Pest Detection')
     
+
     # Set text and pass to sub_text function
     text = """
     <center> <br> Welcome to the Victor's Crop Disease & Pest Detection Add-On. </br> </center>
@@ -242,38 +240,14 @@ def main():
         help.header(translate_alone("Please select the method you want to use to upload photo.", language))
         help.sub_text(translate_alone("Note: A.I may use up to 120 seconds for inference.", language))
 
+
+#...........................................................................................................
+#Run Pages.
 if __name__ == "__main__":
-    # ===================== Set page configs =======================
-    # Main panel setup
-    # Set website details
+    # =========== Set page configs =======# Main panel setup======# Set website details
     st.set_page_config(page_title ="Victor's Crop Analysis Add-On", page_icon=':camera:', layout='centered')
     my_page = st.sidebar.radio('Page Navigation', ['Crop Analysis', 'Find pest control shop', 'Test'])
     if my_page == 'Crop Analysis':
         main()
     elif my_page == 'Find pest control shop':
         find_nearby_shop_ux()
-    else:
-        loc_button = Button(label="Get Location")
-        loc_button.js_on_event("button_click", CustomJS(code="""
-            navigator.geolocation.getCurrentPosition(
-                (loc) => {
-                    document.dispatchEvent(new CustomEvent("GET_LOCATION", {detail: {lat: loc.coords.latitude, lon: loc.coords.longitude}}))
-                }
-            )
-            """))
-        result = streamlit_bokeh_events(
-            loc_button,
-            events="GET_LOCATION",
-            key="get_location",
-            refresh_on_update=False,
-            override_height=75,
-            debounce_time=0)
-
-        if result:
-            if "GET_LOCATION" in result:
-                st.write(result.get("GET_LOCATION"))
-                lat = result.get("GET_LOCATION")["lat"]
-                lon = result.get("GET_LOCATION")["lon"]
-                df = pd.DataFrame([lat,lon]).T
-                df.columns = ['lat', 'lon']
-                st.map(df)
