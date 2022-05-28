@@ -299,8 +299,15 @@ def main():
 #...........................................................................................................
 #Run Pages.
 if __name__ == "__main__":
-    # =========== Set page configs =======# Main panel setup======# Set website details
+    # =========== Set page configs ==========================================
     st.set_page_config(page_title ="Victor's Crop Analysis Add-On", page_icon=':camera:', layout='centered')
+    ############################ HIDE STREAMLIT SIDE BAR ################################################
+    hide_streamlit_style = """
+    <style>
+    #MainMenu {visibility: hidden;}
+    # footer {visibility: hidden;}
+    # </style>"""
+    st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
     with st.sidebar:
         my_page = option_menu(
             menu_title=None,

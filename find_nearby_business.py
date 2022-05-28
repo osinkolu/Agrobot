@@ -4,7 +4,7 @@ import json
 import folium
 from streamlit_folium import st_folium
 
-gcloud_api_key = "AIzaSyAdqGSasNl5j98V7i8y9mZHlXU5uM1GTeg"#os.environ['gcloud_api_key']
+gcloud_api_key = os.environ['gcloud_api_key']
 print(gcloud_api_key)
 
 def find_nearby_pest_shop(max_n, lat , lon):
