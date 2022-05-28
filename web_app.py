@@ -19,7 +19,7 @@ import snapshot as snap #for your snapshot
 import helper as help # import my text script.
 import numpy as np 
 import pandas as pd
-#from search_and_translate import search_and_translate,translate_alone # import functions from the script
+from search_and_translate import search_and_translate, translate_alone # import functions from the script
 from settings import model_influencer # very important to attribute your models
 from find_nearby_business import find_nearby_pest_shop #import to find nearby shops.
 from streamlit_folium import st_folium
