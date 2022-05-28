@@ -10,6 +10,7 @@ A streamlit app to call streamlit component webrtc and load a tf lite model for 
 """
 
 #  import main packages
+from requests import session
 import streamlit as st 
 from PIL import Image # PIL is used to display images 
 import os # used to save images in a directory
@@ -18,10 +19,12 @@ import snapshot as snap #for your snapshot
 import helper as help # import my text script.
 import numpy as np 
 import pandas as pd
-from search_and_translate import search_and_translate,translate_alone # import functions from the script
+#from search_and_translate import search_and_translate,translate_alone # import functions from the script
 from settings import model_influencer # very important to attribute your models
-from find_nearby_business import find_nearby_pest_shop, my_folium_map #import to find nearby shops.
+from find_nearby_business import find_nearby_pest_shop #import to find nearby shops.
 from streamlit_folium import st_folium
+import folium
+from streamlit_option_menu import option_menu
 
 # import what you need to track users.
 from bokeh.models.widgets import Button
@@ -30,6 +33,14 @@ from streamlit_bokeh_events import streamlit_bokeh_events
 
 # Bring in my language codes csv file
 lang_table = pd.read_csv("languages_by_victor.csv")
+if "model_option" not in st.session_state:
+    st.session_state.model_option = 'crop_disease'
+model = model_influencer(st.session_state.model_option)
+model.set_params()
+if "language" not in st.session_state:
+    st.session_state.language = "en"
+if "thresh" not in st.session_state:
+    st.session_state.thresh = model.initial_threshold
 
 #define a function to rollout UI from detections.
 def output_from_the_image(detector,image_np,language, model, type):
@@ -84,10 +95,15 @@ def roll_the_UX(demo_img, thresh, model, language,type):
     image_np = np.asarray(im)
     UX_main(image_np, thresh, model, language,type)
 
+
+
+
+
+########################################## NEARBY PEST SHOPS APP #################################################
 #Define a function to find nearby Pesticides and herbicides shop. 
 def find_nearby_shop_ux():
-    st.write("Hi there, We can help you find the nearest Pesticides and herbicides shop")
-    st.error("Do you permit us to use your location to improve results?")
+    st.write("Hi there, We can help you find the nearest Pesticides and herbicides shop, click on get location to find nearby pest control store.")
+    # Leverage Javascript code to get location unlike normal python geocode.
     loc_button = Button(label="Get Location")
     loc_button.js_on_event("button_click", CustomJS(code="""
             navigator.geolocation.getCurrentPosition(
@@ -103,47 +119,86 @@ def find_nearby_shop_ux():
                 refresh_on_update=False,
                 override_height=40,
                 debounce_time=0)
-
+# Get location and draw the Map
     if result:
         if "GET_LOCATION" in result:
             lat = result.get("GET_LOCATION")["lat"]
             lon = result.get("GET_LOCATION")["lon"]
             st.info("This is where you are: We are searching for the nearest crop pest & disease control store.")
-            m  = my_folium_map([lat,lon])
-            st_data = st_folium(m, width= 700)            
+            m  = folium.Map([lat,lon],zoom_start = 11)
+            folium.Marker([lat, lon], popup="Your location", tooltip="You", icon=folium.Icon(color="green")).add_to(m)   
             try:
-                print("here")
+                # Find the shops.
                 shops_list  =  find_nearby_pest_shop(5, lat, lon)
-                print("passed")
                 business_names = shops_list[0]
                 business_status = shops_list[1]
                 address = shops_list[2]
                 latitudes = shops_list[3]
                 longitudes = shops_list[4]
+
+                #  Construct the Map and the widgets
                 for i in range(len(business_names)):
+ #                   html=f"""
+ #       <h1> {business_names[i]}</h1>
+ #       <p>You can use any html here! Let's do a list:</p>
+ #       <ul>
+ #           <li>{address[i]}</li>
+ #           <li>{business_status[i]}</li>
+ #       </ul>
+ #       </p>
+ #       <p>And that's a <a href="https://www.python-graph-gallery.com">link</a></p>
+ #      """
+ #                  iframe = folium.IFrame(html=html, width=200, height=200)
+                    popup = folium.Popup("Address: " + address[i], max_width=2650)
+
+                    folium.Marker([latitudes[i], longitudes[i]], tooltip=business_names[i],popup=popup, icon=folium.Icon(color="blue") ).add_to(m)
                     with st.expander(business_names[i]):
-                        m  = my_folium_map([latitudes[i],longitudes[i]])
-                        st_data_ = st_folium(m, width= 700)
                         st.write("Address: " + address[i])
                         st.write("Current Status: "+business_status[i])
+                st_data_ = st_folium(m, width= 700)
             except:
                 st.warning("I'm sorry, we didn't find anybody closeby.")
+                st_data_ = st_folium(m, width= 700)
+
             
     if st.button("Stop! don't use my location"):
         del result
         st.error("No worries, We've destroyed our location tracker, you can use google maps to find the nearest herbicides shops.")
 
 
-#Write Main Script.
-#..............................................................................................................
-def main():
-    # Set the background
-    help.set_bg_hack() 
-    # ===================== Set header and site info =============================
-    # Set app header
-    help.header('Crop Disease and Pest Detection')
-    
+########################################## Settings Page ####################################################################
+#This function returns the whole settings page
+def settings():
+    use_cases = ['crop_disease','Pests_attack (Not available yet)','fruits_harvest', 'weeds', 'chicken']
+    # Just in case there's nothing in session state yet, set it.
+    if "use_cases_index" not in st.session_state:
+        st.session_state.use_cases_index=0
+    # You must keep model option as you move across states, it's too important.
+    st.session_state.model_option = st.selectbox('Kindly select use case or preferred model',tuple(use_cases), index=st.session_state.use_cases_index)
+    # update the index incase you come back, you'll def want it selected
+    st.session_state.use_cases_index = use_cases.index(st.session_state.model_option)
 
+    #Reset the model because you've changed model option
+    model = model_influencer(st.session_state.model_option)
+    model.set_params()
+
+    # Get explainations in your native language
+    language_names = lang_table.language_name.values.tolist()
+
+    if "language_index" not in st.session_state:
+        st.session_state.language_index=0
+    language = st.selectbox('Select your preferred language',tuple(language_names), index=st.session_state.language_index)
+    st.session_state.language = lang_table[lang_table["language_name"]==language].language_name.values[0]
+    st.session_state.language_index = language_names.index(st.session_state.language)
+
+    # I used a slider to set-up an adjustable threshold
+    st.session_state.thresh = st.slider("Set threshold for predictions.",0.0,1.0,model.initial_threshold,0.05)
+    st.write('Threshold:', st.session_state.thresh, )
+    help.sub_text("<center>You can read more about the models in the about section</center>")
+
+########################## ABOUT MODELS PAGE #########################################################################
+
+def about_models():
     # Set text and pass to sub_text function
     text = """
     <center> <br> Welcome to the Victor's Crop Disease & Pest Detection Add-On. </br> </center>
@@ -155,31 +210,30 @@ def main():
     # Set expander with references and special mentions
     help.expander()
     
-    
-    # ======================= Get tf lite model details ==========================
-    #labels, colors, height, width, interpreter = detect.define_tf_lite_model()
-    
-    # ============================= Main app =====================================
 
-   # model = model_influencer("crop_disease")
-   # model.set_params()
-        # Get explainations 
 
-    with st.expander("Settings"):
-        # choose your model type
-        model_option = st.selectbox('Kindly select use case or preferred model',('crop_disease','Pests_attack (Not available yet)','fruits_harvest', 'weeds', 'chicken'))
-        model = model_influencer(model_option)
+
+    # Set text and pass to sub_text function
+    text = """
+    <center> Learn more about the Predictions of the A.I model <p> </p> </center>
+    """
+    help.sub_text(text)
+    for models in ['crop_disease','fruits_harvest', 'weeds', 'chicken']:
+        model = model_influencer(models)
         model.set_params()
-        # Get explainations in your native language
-        language = st.selectbox('Get explainations in your preferred language',tuple(lang_table.language_name.values))
-        language = lang_table[lang_table["language_name"]==language].language_name.values[0]
-        # I used a slider to set-up an adjustable threshold
-        thresh = st.slider("Set threshold for predictions.",0.0,1.0,model.initial_threshold,0.05)
-        st.write('Threshold:', thresh, )
+        with st.expander("About the " + models.title() + " A.I model"):
+            help.sub_text(model.detectables)
 
-    with st.expander("List of Possible Detections"):
-        help.sub_text(model.detectables)
 
+#Write Main Script.
+#..............................................................................................................
+def main():
+    # Set the background
+    help.set_bg_hack() 
+    # ===================== Set header and site info =============================
+    # Set app header
+    help.header('Crop Analysis')
+    
     # choosing the input method for the app.
     option = st.selectbox(
         'Please select photo input type',
@@ -204,7 +258,7 @@ def main():
             im.thumbnail((512, 512), Image.ANTIALIAS)
             image_np = np.asarray(im)
 
-            UX_main(image_np, thresh, model, language, model.type)
+            UX_main(image_np, st.session_state.thresh, model, st.session_state.language, model.type)
 
         else:
 
@@ -227,19 +281,19 @@ def main():
 
             image_np = np.asarray(im)
 
-            UX_main(image_np, thresh, model, language,model.type)
+            UX_main(image_np, st.session_state.thresh, model, st.session_state.language,model.type)
 
     elif option == 'Use demo image 01':
-        roll_the_UX(model.demo1,thresh,model,language,model.type)
+        roll_the_UX(model.demo1,st.session_state.thresh,model,st.session_state.language,model.type)
 
     elif option == 'Use demo image 02':
-        roll_the_UX(model.demo2,thresh,model,language,model.type)
+        roll_the_UX(model.demo2,st.session_state.thresh,model,st.session_state.language,model.type)
 
     elif option == 'Use demo image 03':
-        roll_the_UX(model.demo3,thresh,model,language,model.type)
+        roll_the_UX(model.demo3,st.session_state.thresh,model,st.session_state.language,model.type)
     else:
-        help.header(translate_alone("Please select the method you want to use to upload photo.", language))
-        help.sub_text(translate_alone("Note: A.I may use up to 120 seconds for inference.", language))
+        help.header(translate_alone("Please select the method you want to use to upload photo.", st.session_state.language))
+        help.sub_text(translate_alone("Note: A.I may use up to 120 seconds for inference.", st.session_state.language))
 
 
 #...........................................................................................................
@@ -247,8 +301,20 @@ def main():
 if __name__ == "__main__":
     # =========== Set page configs =======# Main panel setup======# Set website details
     st.set_page_config(page_title ="Victor's Crop Analysis Add-On", page_icon=':camera:', layout='centered')
-    my_page = st.sidebar.radio('Page Navigation', ['Crop Analysis', 'Find pest control shop'])
+    with st.sidebar:
+        my_page = option_menu(
+            menu_title=None,
+            options = ["Home", "Crop Analysis","Pest Control shops","Advanced settings","Contact Specialist", "About the A.I"],
+            icons=["house-fill", "flower1", "shop", "tools","person",],
+        )
+    #my_page = st.sidebar.radio('Page Navigation', ['Crop Analysis', 'Find pest control shop'])
     if my_page == 'Crop Analysis':
         main()
-    elif my_page == 'Find pest control shop':
+    elif my_page == 'Pest Control shops':
         find_nearby_shop_ux()
+    elif my_page == 'Advanced settings':
+        settings()
+    elif my_page == 'About the A.I':
+        about_models()
+    else:
+        st.write("Noting to see here")

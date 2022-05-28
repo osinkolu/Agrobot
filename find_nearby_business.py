@@ -1,11 +1,10 @@
 import requests
 import pandas as pd
 import json
-import os
 import folium
 from streamlit_folium import st_folium
 
-gcloud_api_key = os.environ['gcloud_api_key']
+gcloud_api_key = "AIzaSyAdqGSasNl5j98V7i8y9mZHlXU5uM1GTeg"#os.environ['gcloud_api_key']
 print(gcloud_api_key)
 
 def find_nearby_pest_shop(max_n, lat , lon):
@@ -25,7 +24,7 @@ def find_nearby_pest_shop(max_n, lat , lon):
     address = places_data["vicinity"].to_list()[:max_n]
     return([business_names, business_status, address, latitudes, longitudes])
 
-def my_folium_map(location):
-    m = folium.Map(location = location, zoom_start = 16)
-    folium.Marker(location, popup="Liberty Bell", tooltip="Liberty Bell").add_to(m)
-    return(m)
+#def my_folium_map(location):
+#    m = folium.Map(location = location, zoom_start = 16)
+#    folium.Marker(location, popup="Liberty Bell", tooltip="Liberty Bell").add_to(m)
+#    return(m)
