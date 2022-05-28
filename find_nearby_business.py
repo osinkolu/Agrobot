@@ -2,6 +2,7 @@ import requests
 import pandas as pd
 import json
 import folium
+import os
 from streamlit_folium import st_folium
 
 gcloud_api_key = os.environ['gcloud_api_key']
