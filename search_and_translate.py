@@ -12,9 +12,9 @@ from serpapi import GoogleSearch
 from googletrans import Translator
 import os
 
-#api_key = os.environ['my_api_key']# key already stored as a secret on GitHub and mapped in workflow
+api_key = os.environ['my_api_key']# key already stored as a secret on GitHub and mapped in workflow
 #print(api_key)
-#translator = Translator()
+translator = Translator()
 def search_and_translate(search_string, dest_language):
   params = {
     "q": search_string,
