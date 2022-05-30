@@ -258,13 +258,13 @@ def marketplace():
     with col1:    
         if st.button('Agrimp online Market'):
             js = "window.open('https://agrimp.com/')"  # New tab or window
-            js = "window.location.href = 'https://agrimp.com/'"  # Current tab
+            #js = "window.location.href = 'https://agrimp.com/'"  # Current tab
             html = '<img src onerror="{}">'.format(js)
             div = Div(text=html)
             st.bokeh_chart(div)
         elif st.button('Mkulimayoung online Market'):
             js = "window.open('https://www.mkulimayoung.com/')"  # New tab or window
-            js = "window.location.href = 'https://www.mkulimayoung.com/'"  # Current tab
+            #js = "window.location.href = 'https://www.mkulimayoung.com/'"  # Current tab
             html = '<img src onerror="{}">'.format(js)
             div = Div(text=html)
             st.bokeh_chart(div)
