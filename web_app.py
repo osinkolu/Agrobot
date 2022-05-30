@@ -317,7 +317,7 @@ def main():
         roll_the_UX(model.demo3,st.session_state.thresh,model,st.session_state.language,model.type)
     else:
         help.header(translate_alone("Please select the method you want to use to upload photo.", st.session_state.language))
-        help.sub_text(translate_alone("Note: A.I may use up to 120 seconds for inference.", st.session_state.language))
+        help.sub_text(translate_alone("Note: A.I may use up to 30 seconds for inference.", st.session_state.language))
 
 
 #...........................................................................................................
@@ -335,8 +335,8 @@ if __name__ == "__main__":
     with st.sidebar:
         my_page = option_menu(
             menu_title=None,
-            options = ["Home", "Crop Analysis","Pest Control shops","Advanced settings","Contact Specialist", "About the A.I"],
-            icons=["house-fill", "flower1", "shop", "tools","person",],
+            options = ["Home", "Crop Analysis","Pest Control shops","Marketplace","Advanced settings","Contact Specialist", "About the A.I"],
+            icons=["house-fill", "flower1", "shop","shop-window", "tools","person",],
         )
     #my_page = st.sidebar.radio('Page Navigation', ['Crop Analysis', 'Find pest control shop'])
     if my_page == 'Crop Analysis':
@@ -351,5 +351,12 @@ if __name__ == "__main__":
         settings()
     elif my_page == 'About the A.I':
         about_models()
+    elif my_page == 'Marketplace':
+        if st.button('Open the Market'):
+            js = "window.open('https://www.agone.qiachop.com/')"  # New tab or window
+            js = "window.location.href = 'https://www.agone.qiachop.com/'"  # Current tab
+            html = '<img src onerror="{}">'.format(js)
+            div = Div(text=html)
+            st.bokeh_chart(div)
     else:
         st.write("Noting to see here")
