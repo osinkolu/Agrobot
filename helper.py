@@ -53,8 +53,8 @@ def header(text):
     A header defined by html5 code below.
 
     '''
-    html_temp = f"""
-    <h2 style = "color:#F26531; text_align:center; font-weight: bold;"> {text} </h2>
+    html_temp = f"""<center>
+    <h2 style = "color:#F26531; text_align:center; font-weight: bold;"> {text} </h2></center>
     </div>
     """
     
@@ -75,7 +75,7 @@ def sub_text(text):
     '''
     
     html_temp = f"""
-    <strong style = "color:#FFFFFF; font-weight: bold; text_align:justify;"> {text} </strong>
+    <center><strong style = "color:#FFFFFF; font-weight: bold; text_align:justify;"> {text} </strong></center>
     </div>
     """
     
