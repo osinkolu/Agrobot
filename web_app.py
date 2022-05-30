@@ -277,7 +277,7 @@ def marketplace():
             html = '<img src onerror="{}">'.format(js)
             div = Div(text=html)
             st.bokeh_chart(div)
-   with col5:  
+    with col5:  
         if st.button('Krishi Online Market'):
             js = "window.open('https://www.krishi-market.com/')"  # New tab or window
             js = "window.location.href = 'https://www.krishi-market.com/'"  # Current tab
@@ -291,8 +291,8 @@ def marketplace():
             html = '<img src onerror="{}">'.format(js)
             div = Div(text=html)
             st.bokeh_chart(div)
-   with col6:
-        elif st.button('Crop Spot Online Market'):
+    with col6:
+        if st.button('Crop Spot Online Market'):
             js = "window.open('https://www.cropspot.com/en/farmer/')"  # New tab or window
             js = "window.location.href = 'https://www.cropspot.com/en/farmer/'"  # Current tab
             html = '<img src onerror="{}">'.format(js)
