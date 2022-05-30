@@ -224,6 +224,17 @@ def about_models():
         with st.expander("About the " + models.title() + " A.I model"):
             help.sub_text(model.detectables)
 
+################################# HOME PAGE ###########################################################
+def home():
+    help.header("Welcome to Agrobot")
+    help.sub_text("A place where A.I meets Farming to give you the best Agro-experience<p> </p>")
+    from PIL import Image
+    image = Image.open('tempDir/bgs/nrd-D6Tu_L3chLE-unsplash.jpg')
+    image.thumbnail((1000,1000), Image.ANTIALIAS)
+    st.image(image, caption='Maximizing Farming Output')
+
+
+
 
 #Write Main Script.
 #..............................................................................................................
