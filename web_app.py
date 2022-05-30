@@ -253,7 +253,7 @@ def customer_support():
 def marketplace():
     help.header("Our Own Marketplace is coming soon!")
     help.sub_text("while we build our very own marketplace, we have extended other platforms here for you to sell your farm produce online")
-    col1,col2, col3 = st.beta_columns([1,1,1])
+    col1,col2, col3 = st.columns([1,1,1])
     
     with col1:    
         if st.button('Agrimp online Market'):
