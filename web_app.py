@@ -252,8 +252,9 @@ def customer_support():
 #############################  MARKET PLACE ############################################################
 def marketplace():
     help.header("Our Own Marketplace is coming soon!")
-    help.sub_text("while we build our very own marketplace, we have extended other platforms here for you to sell your farm produce online <p> </p>")
+    help.sub_text("while we build our very own marketplace, we have extended other platforms here for you to sell your farm produce online <p> </p> <p> </p>")
     col1,col2, col3 = st.columns([1,1,1])
+    help.sub_text("<p> </p>")
     col4,col5, col6 = st.columns([1,1,1])
     
     with col1:    
