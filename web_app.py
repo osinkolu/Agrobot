@@ -229,7 +229,7 @@ def home():
     help.header("Welcome to Agrobot")
     help.sub_text("A place where A.I meets Farming to give you the best Agro-experience<p> </p>")
     from PIL import Image
-    image = Image.open('tempDir/bgs/nrd-D6Tu_L3chLE-unsplash.jpg')
+    image = Image.open('agrobot.png')
     image.thumbnail((1000,1000), Image.ANTIALIAS)
     st.image(image, caption='Maximizing Farming Output')
 
