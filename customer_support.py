@@ -24,7 +24,7 @@ def send_to_user(first_name, recepient, email_subject):
         from_email='femiosinkolu@gmail.com',
         to_emails= recepient,
         subject="From Agrobot Support: "+email_subject,
-        html_content= f"Hi {first_name}, This is to confirm to you that we got your email, the support team will reach out to you soon")
+        html_content= f"Hi {first_name}, This is to confirm to you that we got your support ticket from Agrobot, the support team will reach out to you soon")
     try:
         sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
         response = sg.send(message)

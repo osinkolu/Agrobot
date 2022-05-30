@@ -238,7 +238,7 @@ def home():
 #################### Customer Support Page #############################################################
 def customer_support():
     help.sub_text("Feel free to make your complaints here: Both Agricultural & Technical support are avialble")
-    with st.form(key = 'form1'):
+    with st.form(key = 'form1', clear_on_submit=True):
         first_name = st.text_input("Firstname")
         recepient = st.text_input("Your email or Phone No.")
         email_subject = st.text_input("Subject")
