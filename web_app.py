@@ -231,7 +231,7 @@ def home():
     from PIL import Image
     image = Image.open('agrobot.png')
     image.thumbnail((1000,1000), Image.ANTIALIAS)
-    st.image(image, caption='Maximizing Farming Output')
+    st.image(image, caption='We offer our farmers the best tools')
 
 
 
