@@ -171,6 +171,7 @@ def find_nearby_shop_ux():
 ########################################## Settings Page ####################################################################
 #This function returns the whole settings page
 def settings():
+    help.header("Advanced Settings")
     use_cases = ['crop_disease','Pests_attack (Not available yet)','fruits_harvest', 'weeds', 'chicken']
     # Just in case there's nothing in session state yet, set it.
     if "use_cases_index" not in st.session_state:
