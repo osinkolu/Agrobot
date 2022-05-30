@@ -379,7 +379,7 @@ def main():
 #Run Pages.
 if __name__ == "__main__":
     # =========== Set page configs ==========================================
-    st.set_page_config(page_title ="Victor's Crop Analysis Add-On", page_icon=':camera:', layout='centered')
+    st.set_page_config(page_title ="Agrobot", page_icon=':camera:', layout='centered')
     ############################ HIDE STREAMLIT SIDE BAR ################################################
     hide_streamlit_style = """
     <style>
