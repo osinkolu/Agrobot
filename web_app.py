@@ -202,6 +202,7 @@ def settings():
 ########################## ABOUT MODELS PAGE #########################################################################
 
 def about_models():
+    help.header("About")
     # Set text and pass to sub_text function
     text = """
     <center> <br> Welcome to the Agrobot Project. </br> </center>
@@ -239,7 +240,7 @@ def home():
 
 #################### Customer Support Page #############################################################
 def customer_support():
-    help.header("Get Help from Experts")
+    help.header("Get Help From Experts.")
     help.sub_text("Feel free to make your complaints here: Both Agricultural & Technical support are avialble")
     with st.form(key = 'form1', clear_on_submit=True):
         first_name = st.text_input("Firstname")
