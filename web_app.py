@@ -202,7 +202,7 @@ def settings():
 ########################## ABOUT MODELS PAGE #########################################################################
 
 def about_models():
-    help.header("About")
+    help.header("Our Stack")
     # Set text and pass to sub_text function
     text = """
     <center> <br> Welcome to the Agrobot Project. </br> </center>
