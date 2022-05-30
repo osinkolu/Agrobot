@@ -103,6 +103,7 @@ def roll_the_UX(demo_img, thresh, model, language,type):
 ########################################## NEARBY PEST SHOPS APP #################################################
 #Define a function to find nearby Pesticides and herbicides shop. 
 def find_nearby_shop_ux():
+    help.header("Find Nearby Pest Control Shop")
     st.write("Hi there, We can help you find the nearest Pesticides and herbicides shop, click on get location to find nearby pest control store.")
     # Leverage Javascript code to get location unlike normal python geocode.
     loc_button = Button(label="Get Location")
@@ -202,7 +203,7 @@ def settings():
 def about_models():
     # Set text and pass to sub_text function
     text = """
-    <center> <br> Welcome to the Victor's Crop Disease & Pest Detection Add-On. </br> </center>
+    <center> <br> Welcome to the Agrobot Project. </br> </center>
     <center> This App is an add-on for the Larger Centralized Food Platform aimed at reducing food loss and food waste. You can either take or upload photos of your crop to use the A.I.
     </center>
     """
