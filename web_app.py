@@ -28,7 +28,7 @@ from streamlit_option_menu import option_menu
 from customer_support import send_email
 
 # import what you need to track users.
-from bokeh.models.widgets import Button
+from bokeh.models.widgets import Button, Div
 from bokeh.models import CustomJS
 from streamlit_bokeh_events import streamlit_bokeh_events
 
@@ -247,7 +247,53 @@ def customer_support():
 
     if submit_button:
         send_email(first_name, recepient, email_subject, email_body)
-        st.success("Hi {}, your complaint has been sent, help will come soon.".format(first_name))    
+        st.success("Hi {}, your complaint has been sent, help will come soon.".format(first_name))
+
+#############################  MARKET PLACE ############################################################
+def marketplace():
+    help.header("Our Own Marketplace is coming soon!")
+    help.sub_text("while we build our very own marketplace, we have extended other platforms here for you to sell your farm produce online")
+    col1,col2, col3 = st.beta_columns([1,1,1])
+    
+    with col1:    
+        if st.button('Agrimp online Market'):
+            js = "window.open('https://agrimp.com/')"  # New tab or window
+            js = "window.location.href = 'https://agrimp.com/'"  # Current tab
+            html = '<img src onerror="{}">'.format(js)
+            div = Div(text=html)
+            st.bokeh_chart(div)
+        elif st.button('Mkulimayoung online Market'):
+            js = "window.open('https://www.mkulimayoung.com/')"  # New tab or window
+            js = "window.location.href = 'https://www.mkulimayoung.com/'"  # Current tab
+            html = '<img src onerror="{}">'.format(js)
+            div = Div(text=html)
+            st.bokeh_chart(div)
+    with col2:
+        if st.button('Agribros Online Market'):
+            js = "window.open('https://www.agribros.market/marketplace')"  # New tab or window
+            js = "window.location.href = 'https://www.agribros.market/marketplace'"  # Current tab
+            html = '<img src onerror="{}">'.format(js)
+            div = Div(text=html)
+            st.bokeh_chart(div)   
+        elif st.button('Krishi Online Market'):
+            js = "window.open('https://www.krishi-market.com/')"  # New tab or window
+            js = "window.location.href = 'https://www.krishi-market.com/'"  # Current tab
+            html = '<img src onerror="{}">'.format(js)
+            div = Div(text=html)
+            st.bokeh_chart(div)
+    with col3:        
+        if st.button('Agrolinka Online Market'):
+            js = "window.open('https://agrolinka.com/Home/Product')"  # New tab or window
+            js = "window.location.href = 'https://agrolinka.com/Home/Product'"  # Current tab
+            html = '<img src onerror="{}">'.format(js)
+            div = Div(text=html)
+            st.bokeh_chart(div)
+        elif st.button('Crop Spot Online Market'):
+            js = "window.open('https://www.cropspot.com/en/farmer/')"  # New tab or window
+            js = "window.location.href = 'https://www.cropspot.com/en/farmer/'"  # Current tab
+            html = '<img src onerror="{}">'.format(js)
+            div = Div(text=html)
+            st.bokeh_chart(div)
 
 #Write Main Script.
 #..............................................................................................................
@@ -352,11 +398,6 @@ if __name__ == "__main__":
     elif my_page == 'About the A.I':
         about_models()
     elif my_page == 'Marketplace':
-        if st.button('Open the Market'):
-            js = "window.open('https://www.agone.qiachop.com/')"  # New tab or window
-            js = "window.location.href = 'https://www.agone.qiachop.com/'"  # Current tab
-            html = '<img src onerror="{}">'.format(js)
-            div = Div(text=html)
-            st.bokeh_chart(div)
+        marketplace()
     else:
         st.write("Noting to see here")
