@@ -317,6 +317,8 @@ if __name__ == "__main__":
     #my_page = st.sidebar.radio('Page Navigation', ['Crop Analysis', 'Find pest control shop'])
     if my_page == 'Crop Analysis':
         main()
+    elif my_page == 'Home':
+        home()
     elif my_page == 'Pest Control shops':
         find_nearby_shop_ux()
     elif my_page == 'Advanced settings':
