@@ -252,7 +252,7 @@ def customer_support():
 #############################  MARKET PLACE ############################################################
 def marketplace():
     help.header("Our Own Marketplace is coming soon!")
-    help.sub_text("while we build our very own marketplace, we have extended other platforms here for you to sell your farm produce online")
+    help.sub_text("while we build our very own marketplace, we have extended other platforms here for you to sell your farm produce online <p> </p>")
     col1,col2, col3 = st.columns([1,1,1])
     col4,col5, col6 = st.columns([1,1,1])
     
@@ -273,28 +273,28 @@ def marketplace():
     with col2:
         if st.button('Agribros Online Market'):
             js = "window.open('https://www.agribros.market/marketplace')"  # New tab or window
-            js = "window.location.href = 'https://www.agribros.market/marketplace'"  # Current tab
+            #js = "window.location.href = 'https://www.agribros.market/marketplace'"  # Current tab
             html = '<img src onerror="{}">'.format(js)
             div = Div(text=html)
             st.bokeh_chart(div)
     with col5:  
         if st.button('Krishi Online Market'):
             js = "window.open('https://www.krishi-market.com/')"  # New tab or window
-            js = "window.location.href = 'https://www.krishi-market.com/'"  # Current tab
+            #js = "window.location.href = 'https://www.krishi-market.com/'"  # Current tab
             html = '<img src onerror="{}">'.format(js)
             div = Div(text=html)
             st.bokeh_chart(div)
     with col3:        
         if st.button('Agrolinka Online Market'):
             js = "window.open('https://agrolinka.com/Home/Product')"  # New tab or window
-            js = "window.location.href = 'https://agrolinka.com/Home/Product'"  # Current tab
+            #js = "window.location.href = 'https://agrolinka.com/Home/Product'"  # Current tab
             html = '<img src onerror="{}">'.format(js)
             div = Div(text=html)
             st.bokeh_chart(div)
     with col6:
         if st.button('Crop Spot Online Market'):
             js = "window.open('https://www.cropspot.com/en/farmer/')"  # New tab or window
-            js = "window.location.href = 'https://www.cropspot.com/en/farmer/'"  # Current tab
+            #js = "window.location.href = 'https://www.cropspot.com/en/farmer/'"  # Current tab
             html = '<img src onerror="{}">'.format(js)
             div = Div(text=html)
             st.bokeh_chart(div)
