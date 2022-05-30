@@ -202,7 +202,7 @@ def settings():
 ########################## ABOUT MODELS PAGE #########################################################################
 
 def about_models():
-    help.header("Our Stack")
+    help.header("Our Stack.")
     # Set text and pass to sub_text function
     text = """
     <center> <br> Welcome to the Agrobot Project. </br> </center>
@@ -379,7 +379,6 @@ def main():
 #Run Pages.
 if __name__ == "__main__":
     # =========== Set page configs ==========================================
-    st.set_page_config(page_title ="Victor's Crop Analysis Add-On", page_icon=':camera:', layout='centered')
     ############################ HIDE STREAMLIT SIDE BAR ################################################
     hide_streamlit_style = """
     <style>
@@ -395,18 +394,25 @@ if __name__ == "__main__":
         )
     #my_page = st.sidebar.radio('Page Navigation', ['Crop Analysis', 'Find pest control shop'])
     if my_page == 'Crop Analysis':
+        st.set_page_config(page_title ="Crop Analysis", page_icon=':camera:', layout='centered')
         main()
     elif my_page == 'Home':
+        st.set_page_config(page_title ="Home", page_icon=':camera:', layout='centered')
         home()
     elif my_page == 'Contact Specialist':
+        st.set_page_config(page_title ="Experts", page_icon=':camera:', layout='centered')
         customer_support()
     elif my_page == 'Pest Control shops':
+        st.set_page_config(page_title ="Pest Control Shops", page_icon=':camera:', layout='centered')
         find_nearby_shop_ux()
     elif my_page == 'Advanced settings':
+        st.set_page_config(page_title ="Settings", page_icon=':camera:', layout='centered')
         settings()
     elif my_page == 'About the A.I':
+        st.set_page_config(page_title ="About", page_icon=':camera:', layout='centered')
         about_models()
     elif my_page == 'Marketplace':
+        st.set_page_config(page_title ="Market", page_icon=':camera:', layout='centered')
         marketplace()
     else:
         st.write("Noting to see here")
