@@ -125,7 +125,7 @@ def find_nearby_shop_ux():
         if "GET_LOCATION" in result:
             lat = result.get("GET_LOCATION")["lat"]
             lon = result.get("GET_LOCATION")["lon"]
-            st.info("This is where you are: We are searching for the nearest crop pest & disease control store.")
+            st.info("We found your location: We are searching for the nearest crop pest & disease control store.")
             m  = folium.Map([lat,lon],zoom_start = 11)
             folium.Marker([lat, lon], popup="Your location", tooltip="You", icon=folium.Icon(color="green")).add_to(m)   
             try:
