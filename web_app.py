@@ -25,6 +25,7 @@ from find_nearby_business import find_nearby_pest_shop #import to find nearby sh
 from streamlit_folium import st_folium
 import folium
 from streamlit_option_menu import option_menu
+from customer_support import send_email
 
 # import what you need to track users.
 from bokeh.models.widgets import Button
@@ -234,7 +235,19 @@ def home():
     st.image(image, caption='We offer our farmers the best tools')
 
 
+#################### Customer Support Page #############################################################
+def customer_support():
+    help.sub_text("Feel free to make your complaints here: Both Agricultural & Technical support are avialble")
+    with st.form(key = 'form1'):
+        first_name = st.text_input("Firstname")
+        recepient = st.text_input("Your email or Phone No.")
+        email_subject = st.text_input("Subject")
+        email_body = st.text_area("Complaint")
+        submit_button = st.form_submit_button()
 
+    if submit_button:
+        send_email(first_name, recepient, email_subject, email_body)
+        st.success("Hi {}, your complaint has been sent, help will come soon.".format(first_name))    
 
 #Write Main Script.
 #..............................................................................................................
@@ -330,6 +343,8 @@ if __name__ == "__main__":
         main()
     elif my_page == 'Home':
         home()
+    elif my_page == 'Contact Specialist':
+        customer_support()
     elif my_page == 'Pest Control shops':
         find_nearby_shop_ux()
     elif my_page == 'Advanced settings':

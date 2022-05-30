@@ -9,3 +9,4 @@ google-search-results
 streamlit_bokeh_events
 streamlit-folium
 streamlit_option_menu
+sendgrid
