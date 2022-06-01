@@ -1,4 +1,4 @@
-# Update (May 2022): Ability to find nearest pest control store🏬
+# Update (May 2022): Ability to find nearest pest control store.🏬
 We've given more knowledge power to the farmers, leveraging google maps api. After detecting pest or disease in the farm, Farmers can use the nearby store tool to find the nearest pest control shops based on their current location.
 #### Deployed app on streamlit share is [here](https://share.streamlit.io/osinkolu/agrobot/main/web_app.py).
 
