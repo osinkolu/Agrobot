@@ -258,7 +258,9 @@ def marketplace():
     help.sub_text("while we build our very own marketplace, we have extended other platforms here for you to sell your farm produce online <p> </p> <p> </p>")
     image = Image.open('farmers-market-vector.jpg')
     image.thumbnail((500,500), Image.ANTIALIAS)
-    st.image(image, caption='Marketplace')    
+    col0,col00,col000 = st.columns([1,1,1])
+    with col00:
+        st.image(image, caption='Marketplace')    
     col1,col2, col3 = st.columns([1,1,1])
     help.sub_text("<p> </p>")
     col4,col5, col6 = st.columns([1,1,1])
