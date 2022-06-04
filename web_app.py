@@ -232,7 +232,6 @@ def about_models():
 def home():
     help.header("Welcome to Agrobot")
     help.sub_text("A place where A.I meets Farming to give you the best Agro-experience<p> </p>")
-    from PIL import Image
     image = Image.open('agrobot.png')
     image.thumbnail((1000,1000), Image.ANTIALIAS)
     st.image(image, caption='We offer our farmers the best tools')
@@ -257,6 +256,9 @@ def customer_support():
 def marketplace():
     help.header("Our Own Marketplace is coming soon!")
     help.sub_text("while we build our very own marketplace, we have extended other platforms here for you to sell your farm produce online <p> </p> <p> </p>")
+    image = Image.open('farmers-market-vector.jpg')
+    image.thumbnail((500,500), Image.ANTIALIAS)
+    st.image(image, caption='Marketplace')    
     col1,col2, col3 = st.columns([1,1,1])
     help.sub_text("<p> </p>")
     col4,col5, col6 = st.columns([1,1,1])
