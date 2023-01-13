@@ -255,7 +255,7 @@ def customer_support():
 #############################  MARKET PLACE ############################################################
 def marketplace():
     help.header("Our Own Marketplace is coming soon!")
-    help.sub_text("while we build our very own marketplace, we have extended other platforms here for you to sell your farm produce online <p> </p> <p> </p>")
+    help.sub_text("while we build our very own marketplace (Agrobot Farms), we have extended other platforms here for you to sell your farm produce online <p> </p> <p> </p>")
     image = Image.open('farmers-market-vector.jpg')
     image.thumbnail((500,500), Image.ANTIALIAS)
     col0,col00,col000 = st.columns([0.5,1,0.5])
@@ -266,8 +266,8 @@ def marketplace():
     col4,col5, col6 = st.columns([1,1,1])
     
     with col1:    
-        if st.button('Agrimp online Market'):
-            js = "window.open('https://agrimp.com/')"  # New tab or window
+        if st.button('Agrobot Farms - Ours'):
+            js = "window.open('https://market.agrobotfarms.com/')"  # New tab or window
             #js = "window.location.href = 'https://agrimp.com/'"  # Current tab
             html = '<img src onerror="{}">'.format(js)
             div = Div(text=html)
