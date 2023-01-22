@@ -267,7 +267,7 @@ def marketplace():
     
     with col1:    
         if st.button('Agrobot Farms - Ours'):
-            js = "window.open('https://market.agrobotfarms.com/')"  # New tab or window
+            js = "window.open('https://www.market.agrobotfarms.com/')"  # New tab or window
             #js = "window.location.href = 'https://agrimp.com/'"  # Current tab
             html = '<img src onerror="{}">'.format(js)
             div = Div(text=html)
