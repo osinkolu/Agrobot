@@ -5,7 +5,7 @@ tensorflow==2.7.3
 tflite-model-maker
 tflite-support==0.3.1
 googletrans==4.0.0-rc1
-google-search-results
+google-search-results==2.4.1
 streamlit_bokeh_events
 bokeh == 2.4.1
 streamlit-folium
