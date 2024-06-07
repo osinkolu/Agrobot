@@ -11,3 +11,4 @@ bokeh == 2.4.1
 streamlit-folium
 streamlit_option_menu
 sendgrid
+numpy==1.23.4
