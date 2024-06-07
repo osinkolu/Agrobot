@@ -12,3 +12,4 @@ streamlit-folium
 streamlit_option_menu
 sendgrid
 numpy==1.23.4
+Pillow==9.5.0
